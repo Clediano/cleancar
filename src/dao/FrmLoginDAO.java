@@ -9,6 +9,13 @@ import jdbc.ConnectionFactory;
 
 public class FrmLoginDAO {
 	
+	/**
+	 * Verifica se o usuário e senha se encontram no banco de dados.
+	 * @param usuario
+	 * @param senha
+	 * @return false se não encontrar e true se encontrar
+	 */
+	
 	public boolean confirmAccount(String usuario, String senha) {
 		Connection conn = new ConnectionFactory().getConnection();
 		PreparedStatement ps;

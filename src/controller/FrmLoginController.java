@@ -1,6 +1,9 @@
 package controller;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.Properties;
 
 import address.Main;
 import dao.FrmLoginDAO;
@@ -10,15 +13,21 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.stage.Stage;
+import jdbc.ConnectionFactory;
+import util.PropertiesLoader;
+import util.PropertiesLoaderImpl;
 
 public class FrmLoginController {
+	
+	public static Stage stagePrincipal;
 
 	@FXML
 	private Button btnConfirmar;
@@ -51,33 +60,59 @@ public class FrmLoginController {
 	}
 
 	public void verificarUsuario() {
-		// confere se o usuário existe no banco
-		FrmLoginDAO login = new FrmLoginDAO();
+		
+		System.out.println(PropertiesLoaderImpl.getValor("caminho").isEmpty());
 
-		String nome = txtUsuario.getText();
-		String senha = txtSenha.getText();
-
-		if (login.confirmAccount(nome, senha)) {
+		if (PropertiesLoaderImpl.getValor("caminho").isEmpty()) {
 			try {
-				Parent parent = FXMLLoader.load(getClass().getClassLoader().getResource("view/FrmContainer.fxml"));
+				Parent parent = FXMLLoader.load(getClass().getClassLoader().getResource("view/FrmCaminhoBanco.fxml"));
+
+				Stage stage = new Stage();
 
 				Scene scene = new Scene(parent);
-
-				Main.primaryStage.setScene(scene);
-				Main.primaryStage.setTitle("Página Principal");
-				Main.primaryStage.getIcons().add(new Image("img/iconFrmLogin.png"));
-				Main.primaryStage.show();
+				stage.setScene(scene);
+				stage.setTitle("Configuração do banco de dados");
+				stage.show();
 
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
 		} else {
-			Alert alert = new Alert(AlertType.WARNING);
-			alert.setHeaderText("Acesso negado!");
-			alert.setContentText("Usuário ou senha inválido.");
-			alert.setTitle("Usuarios do sistema");
-			alert.show();
+			
+			//alimenta o URL para acessar o banco de dados
+			ConnectionFactory.URL += PropertiesLoaderImpl.getValor("caminho");
+			
+			FrmLoginDAO login = new FrmLoginDAO();
+
+			String nome = txtUsuario.getText();
+			String senha = txtSenha.getText();
+
+			if (login.confirmAccount(nome, senha)) {
+				try {
+					Parent parent = FXMLLoader.load(getClass().getClassLoader().getResource("view/FrmContainer.fxml"));
+
+					Scene scene = new Scene(parent);
+					
+					stagePrincipal = new Stage();
+
+					stagePrincipal.setScene(scene);
+					stagePrincipal.setTitle("Página Principal");
+					stagePrincipal.getIcons().add(new Image("img/iconFrmLogin.png"));
+					stagePrincipal.show();
+					
+					Main.primaryStage.close();
+
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			} else {
+
+				Alert alert = new Alert(AlertType.WARNING);
+				alert.setHeaderText("Usuário Inválido!");
+				alert.setContentText("Conexão não efetuada!");
+				alert.setTitle("Verifique os dados informados.");
+				alert.show();
+			}
 		}
 	}
-
 }

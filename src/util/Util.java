@@ -8,6 +8,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 
 public class Util {
+	
 	/**
 	 * Monta a mascara para os campos CNPJ.
 	 *

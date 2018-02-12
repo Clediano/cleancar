@@ -10,7 +10,7 @@ public class Clientes {
 	private String cnpj;
 	private String email;
 	private Integer telefone;
-	private Date dtaCadastro;
+	private Date dataCadastro;
 
 	public Clientes(String nome, String sobrenome, String cnpj, String email, Integer telefone, Date dtaCadastro) {
 		super();
@@ -19,62 +19,53 @@ public class Clientes {
 		this.cnpj = cnpj;
 		this.email = email;
 		this.telefone = telefone;
-		this.dtaCadastro = dtaCadastro;
+		this.dataCadastro = dtaCadastro;
 	}
-
-	public String getNome() {
-		return nome;
+	public Clientes() {
+		super();
 	}
-
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
-
-	public String getSobrenome() {
-		return sobrenome;
-	}
-
-	public void setSobrenome(String sobrenome) {
-		this.sobrenome = sobrenome;
-	}
-
-	public String getCnpj() {
-		return cnpj;
-	}
-
-	public void setCnpj(String cnpj) {
-		this.cnpj = cnpj;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-	public Date getDtaCadastro() {
-		return dtaCadastro;
-	}
-
-	public void setDtaCadastro(Date dtaCadastro) {
-		this.dtaCadastro = dtaCadastro;
-	}
-
-	public Integer getTelefone() {
-		return telefone;
-	}
-
-	public void setTelefone(Integer telefone) {
-		this.telefone = telefone;
-	}
-
 	public Integer getCodigo() {
 		return codigo;
 	}
-
 	public void setCodigo(Integer codigo) {
 		this.codigo = codigo;
 	}
+	public String getNome() {
+		return nome;
+	}
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+	public String getSobrenome() {
+		return sobrenome;
+	}
+	public void setSobrenome(String sobrenome) {
+		this.sobrenome = sobrenome;
+	}
+	public String getCnpj() {
+		return cnpj;
+	}
+	public void setCnpj(String cnpj) {
+		this.cnpj = cnpj;
+	}
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	public Integer getTelefone() {
+		return telefone;
+	}
+	public void setTelefone(Integer telefone) {
+		this.telefone = telefone;
+	}
+	public Date getDataCadastro() {
+		return dataCadastro;
+	}
+	public void setDataCadastro(Date dataCadastro) {
+		this.dataCadastro = dataCadastro;
+	}
+
+	
 }

@@ -1,6 +1,7 @@
 package dao;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -8,23 +9,24 @@ import java.sql.SQLException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import jdbc.ConnectionFactory;
+import model.Clientes;
 import model.Usuarios;
 
 public class FrmCadastroClienteDAO {
 	
 	/**
-	 * Retornar verdadeiro se o usuário existe no banco de dados. Caso não existir este usuário no banco de dados, é retornado falso.
+	 * Retornar verdadeiro se o cliente existe no banco de dados. Caso não existir este cliente no banco de dados, é retornado falso.
 	 * @param String usuario
 	 * @return boolean
 	 */
-	public boolean verificarUsuario(String usuario) {
+	public boolean verificarCliente(String cnpj) {
 		Connection conn = new ConnectionFactory().getConnection();
 		PreparedStatement ps;
 		ResultSet rs;
 		
 		try {
-			ps = conn.prepareStatement("select usu_nome from usuarios where usu_nome = ?;");
-			ps.setString(1, usuario);
+			ps = conn.prepareStatement("select cli_cnpj from usuarios where cli_cnpj = ?;");
+			ps.setString(1, cnpj);
 			
 			rs = ps.executeQuery();
 			
@@ -46,14 +48,18 @@ public class FrmCadastroClienteDAO {
 	 * @param senha
 	 * @return boolean
 	 */
-	public boolean cadastrarUsario(String usuario, String senha) {
+	public boolean cadastrarCliente(String nome, String sobrenome, String cnpj, String email, Integer telefone, Date dtaCadastro) {
 		Connection conn = new ConnectionFactory().getConnection();
 		PreparedStatement ps;
 		
 		try {
-			ps = conn.prepareStatement("insert into usuarios (usu_nome, usu_senha) values (?,?);");
-			ps.setString(1, usuario);
-			ps.setString(2, senha);
+			ps = conn.prepareStatement("insert into clientes (cli_nome, cli_sobrenome, cli_cnpj, cli_email, cli_telefone, cli_data_cadastro) values (?,?,?,?,?,?);");
+			ps.setString(1, nome);
+			ps.setString(2, sobrenome);
+			ps.setString(3, cnpj);
+			ps.setString(4, email);
+			ps.setInt(5, telefone);
+			ps.setDate(6, dtaCadastro);
 			
 			if(ps.executeUpdate() != 0) {
 				return true;
@@ -67,29 +73,32 @@ public class FrmCadastroClienteDAO {
 	}
 	
 	/**
-	 * Retorna um ObservableList contendo todos os usuários do banco de dados.
+	 * Retorna um ObservableList contendo todos os clientes do banco de dados.
 	 * @return ObservableList
 	 */
-	public ObservableList<Usuarios> capturarTodosUsuarios() {
+	public ObservableList<Clientes> capturarTodosClientes() {
 		Connection conn = new ConnectionFactory().getConnection();
 		PreparedStatement ps;
 		ResultSet rs;
-		Usuarios usuario;
-		ObservableList<Usuarios> lista = FXCollections.observableArrayList(); 
+		Clientes cliente;
+		ObservableList<Clientes> lista = FXCollections.observableArrayList(); 
 		
 		try {
-			ps = conn.prepareStatement("select * from usuarios;");
+			ps = conn.prepareStatement("select * from clientes;");
 			
 			rs = ps.executeQuery();
 			
 			while(rs.next()) {
-				usuario = new Usuarios();
+				cliente = new Clientes();
 				
-				usuario.setCodigo(rs.getInt(1));
-				usuario.setUsuario(rs.getString(2));
-				usuario.setSenha(rs.getString(3));
+				cliente.setCodigo(rs.getInt(1));
+				cliente.setNome(rs.getString(2));
+				cliente.setSobrenome(rs.getString(3));
+				cliente.setCnpj(rs.getString(4));
+				cliente.setEmail(rs.getString(5));
+				cliente.setDataCadastro(rs.getDate(6));
 				
-				lista.add(usuario);
+				lista.add(cliente);
 			}
 			
 		} catch (SQLException e) {
@@ -99,7 +108,7 @@ public class FrmCadastroClienteDAO {
 	}
 	
 	/**
-	 * Retorna um ObservableList contendo todos os usuários do banco de dados.
+	 * Retorna um ObservableList contendo todos os clientes do banco de dados.
 	 * @param String contendo o possivel usuário(login);
 	 * @return ObservableList
 	 */

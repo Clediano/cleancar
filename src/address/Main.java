@@ -9,9 +9,11 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
+import util.PropertiesLoaderImpl;
 
 public class Main extends Application {
-	
+
 	public static Stage primaryStage;
 
 	@Override
@@ -19,22 +21,23 @@ public class Main extends Application {
 
 		this.primaryStage = primaryStage;
 		primaryStage.getIcons().add(new Image("file:resource/img/iconFrmPrincipal.png"));
-		
-		/**
-		 * Carregando o arquivo FXML da página principal.
-		 */
+
 		initialize();
 	}
-	
+
 	private void initialize() {
 		try {
-			Parent parent = FXMLLoader.load(getClass().getClassLoader().getResource("view/FrmLogin.fxml"));
+
+			PropertiesLoaderImpl.setValor("caminho", "CAMINHO DE TESTE");
 			
+			Parent parent = FXMLLoader.load(getClass().getClassLoader().getResource("view/FrmLogin.fxml"));
+
 			Scene scene = new Scene(parent);
 			primaryStage.setScene(scene);
+			primaryStage.initStyle(StageStyle.UTILITY);
 			primaryStage.setTitle("Login");
 			primaryStage.show();
-			
+
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

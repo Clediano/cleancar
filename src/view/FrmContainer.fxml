@@ -22,6 +22,7 @@
           <Menu mnemonicParsing="false" text="Configurações">
             <items>
               <MenuItem fx:id="btnUsuarios" mnemonicParsing="false" onAction="#handleUsuarios" text="Usuários" />
+                  <MenuItem fx:id="btnBanco" mnemonicParsing="false" onAction="#handleBanco" text="Banco de dados" />
             </items>
           </Menu>
         </menus>
