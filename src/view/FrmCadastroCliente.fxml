@@ -63,7 +63,7 @@
         <tabs>
           <Tab fx:id="hBoxConsulta" text="Consulta">
                <content>
-                  <TableView fx:id="tblClientes" prefHeight="288.0" prefWidth="654.0">
+                  <TableView fx:id="tblClientes" onKeyPressed="#onKeyDelPressed" prefHeight="288.0" prefWidth="654.0">
                     <columns>
                       <TableColumn editable="false" prefWidth="91.0" text="Nome" />
                       <TableColumn editable="false" prefWidth="317.0" text="Sobrenome" />

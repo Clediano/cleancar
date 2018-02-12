@@ -11,7 +11,7 @@
         <menus>
           <Menu mnemonicParsing="false" text="Cadastros">
             <items>
-              <MenuItem mnemonicParsing="false" text="Close" />
+              <MenuItem fx:id="mnClientes" mnemonicParsing="false" onAction="#handleCadastroClientes" text="Clientes" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Lançamentos">

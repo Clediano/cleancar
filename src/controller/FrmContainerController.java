@@ -15,6 +15,9 @@ public class FrmContainerController {
 
 	public static Parent parentFrmCadastro;
 
+    @FXML
+    private MenuItem mnClientes;
+    
 	@FXML
 	private AnchorPane anchoPane;
 
@@ -70,6 +73,29 @@ public class FrmContainerController {
 		}
 
 	}
+	
+
+    @SuppressWarnings("static-access")
+	@FXML
+    void handleCadastroClientes(ActionEvent event) {
+    	
+    	desativarPainel();
+    	
+    	try {
+			parentFrmCadastro = FXMLLoader.load(getClass().getClassLoader().getResource("view/FrmCadastroCliente.fxml"));
+
+			anchoPane.setTopAnchor(parentFrmCadastro, 0.0);
+			anchoPane.setBottomAnchor(parentFrmCadastro, 0.0);
+			
+			anchoPane.setLeftAnchor(parentFrmCadastro, 0.0);
+			anchoPane.setRightAnchor(parentFrmCadastro, 0.0);
+			
+			anchoPane.getChildren().add(parentFrmCadastro);
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+    }
 
 	public boolean desativarPainel() {
 		anchoPane.getChildren().clear();
