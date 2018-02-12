@@ -1,0 +1,32 @@
+.button{
+	-fx-text-fill: white;
+	-fx-background-color: linear-gradient(#61a2b1, #2A5058);
+	-fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.6), 5, 0.0, 0, 1);
+	-fx-pref-height: 36;
+	-fx-pref-width: 84;
+}
+.button:hover{
+	-fx-background-color: rgba(31, 149, 206, 0.71);
+}
+#btnLancar{
+	-fx-text-fill: white;
+	-fx-background-color: linear-gradient(#2E8B57, #2F4F4F);
+	-fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.8), 9, 0.0, 0, 3);
+	-fx-pref-height: 46;
+	-fx-pref-width: 95;
+}
+#btnLancar:hover{
+	-fx-background-color: rgba(60, 179, 113, 0.71);
+				
+}
+#btnAdicionar{
+	-fx-text-fill: white;                  
+	-fx-background-color: linear-gradient(#61a2b1, #2A5058);
+	-fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.8), 8, 0.0, 0, 3);
+	-fx-pref-height: 30;
+	-fx-pref-width: 95;
+}
+#btnAdicionar:hover{
+	-fx-background-color: rgba(60, 179, 113, 0.71);
+				
+}
