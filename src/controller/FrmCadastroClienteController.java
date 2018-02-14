@@ -111,7 +111,7 @@ public class FrmCadastroClienteController {
 
     @FXML
     void handleFechar(ActionEvent event) {
-
+    	FrmContainerController.parentFrmCadastro.setVisible(false);
     }
 
     @FXML

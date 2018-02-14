@@ -66,11 +66,11 @@ public class FrmLoginController {
 
 				Scene scene = new Scene(parent);
 				
-				FrmContainerController.stageCaminhoBanco = new Stage();
+				Stage stageCaminhoBanco = new Stage();
 				
-				FrmContainerController.stageCaminhoBanco.setScene(scene);
-				FrmContainerController.stageCaminhoBanco.setTitle("Configuração do banco de dados");
-				FrmContainerController.stageCaminhoBanco.show();
+				stageCaminhoBanco.setScene(scene);
+				stageCaminhoBanco.setTitle("Configuração do banco de dados");
+				stageCaminhoBanco.show();
 
 			} catch (IOException e) {
 				e.printStackTrace();

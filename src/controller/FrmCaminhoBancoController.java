@@ -44,6 +44,9 @@ public class FrmCaminhoBancoController implements Initializable{
 
     @FXML
     private Button btnIncluir;
+    
+    @FXML
+    private Button btnCaminho;
 
     @FXML
     public TextField txtUser;
@@ -76,9 +79,10 @@ public class FrmCaminhoBancoController implements Initializable{
 
     @FXML
     void handleEditar(ActionEvent event) {
-    	txtURL.setEditable(true);
-		txtUser.setEditable(true);
-		txtPassword.setEditable(true);
+    	txtURL.setDisable(false);
+    	txtUser.setDisable(false);
+    	txtPassword.setDisable(false);
+    	btnCaminho.setVisible(true);
     }
 
     @FXML
@@ -87,7 +91,7 @@ public class FrmCaminhoBancoController implements Initializable{
 
     @FXML
     void handleFechar(ActionEvent event) {
-    	FrmContainerController.stageCaminhoBanco.close();
+    	FrmContainerController.parentFrmCaminhoBanco.setVisible(false);
     }
 
     @FXML
@@ -123,7 +127,7 @@ public class FrmCaminhoBancoController implements Initializable{
     	PropertiesLoaderImpl.setValor("PASSWORD", txtPassword.getText());
     	
     	
-    	FrmContainerController.stageCaminhoBanco.close(); 	
+    	FrmContainerController.parentFrmCaminhoBanco.setVisible(false);
     }
 
     @FXML
@@ -152,12 +156,13 @@ public class FrmCaminhoBancoController implements Initializable{
 		btnIncluir.setDisable(true);
 		btnExcluir.setDisable(true);
 		btnCancelar.setDisable(true);
+		btnCaminho.setVisible(false);
 		
 		txtURL.setText(PropertiesLoaderImpl.getValor("URL"));
-		txtURL.setEditable(false);
+		txtURL.setDisable(true);
 		txtUser.setText(PropertiesLoaderImpl.getValor("USER"));
-		txtUser.setEditable(false);
+		txtUser.setDisable(true);
 		txtPassword.setText(PropertiesLoaderImpl.getValor("PASSWORD"));
-		txtPassword.setEditable(false);
+		txtPassword.setDisable(true);
 	}
 }

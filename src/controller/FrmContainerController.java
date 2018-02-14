@@ -11,15 +11,14 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import util.PropertiesLoaderImpl;
 
 public class FrmContainerController {
-	
-	public static Stage stageCaminhoBanco;
 
 	public static Parent parentFrmLancamentosLavagens;
 
 	public static Parent parentFrmCadastro;
+	
+	public static Parent parentFrmCaminhoBanco;
 
     @FXML
     private MenuItem mnClientes;
@@ -110,38 +109,25 @@ public class FrmContainerController {
 	@FXML
 	void handleBanco(ActionEvent event) {
 
-		desativarPainel();
-
-		try {
-			parentFrmCadastro = FXMLLoader.load(getClass().getClassLoader().getResource("view/FrmCaminhoBanco.fxml"));
-
-			anchoPane.setTopAnchor(parentFrmCadastro, 0.0);
-			anchoPane.setBottomAnchor(parentFrmCadastro, 0.0);
-			
-			anchoPane.setLeftAnchor(parentFrmCadastro, 0.0);
-			anchoPane.setRightAnchor(parentFrmCadastro, 0.0);
-			
-			anchoPane.getChildren().add(parentFrmCadastro);
-
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		mostrarTelaBanco();
 
 	}
 	
 	@SuppressWarnings("static-access")
 	public void mostrarTelaBanco() {
 
+		desativarPainel();
+		
 		try {
-			Parent parent = FXMLLoader.load(getClass().getClassLoader().getResource("view/FrmCaminhoBanco.fxml"));
+			parentFrmCaminhoBanco = FXMLLoader.load(getClass().getClassLoader().getResource("view/FrmCaminhoBanco.fxml"));
+
+			anchoPane.setTopAnchor(parentFrmCaminhoBanco, 0.0);
+			anchoPane.setBottomAnchor(parentFrmCaminhoBanco, 0.0);
 			
-			stageCaminhoBanco = new Stage();
+			anchoPane.setLeftAnchor(parentFrmCaminhoBanco, 0.0);
+			anchoPane.setRightAnchor(parentFrmCaminhoBanco, 0.0);
 			
-			Scene scene = new Scene(parent);
-			stageCaminhoBanco.setScene(scene);
-			stageCaminhoBanco.initStyle(StageStyle.UTILITY);
-			stageCaminhoBanco.setTitle("Configuração do banco de dados");		
-			stageCaminhoBanco.show();
+			anchoPane.getChildren().add(parentFrmCaminhoBanco);
 			
 		} catch (IOException e) {
 			e.printStackTrace();
