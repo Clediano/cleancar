@@ -1,9 +1,6 @@
 package controller;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.Properties;
 
 import address.Main;
 import dao.FrmLoginDAO;
@@ -13,20 +10,19 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import jdbc.ConnectionFactory;
-import util.PropertiesLoader;
 import util.PropertiesLoaderImpl;
 
 public class FrmLoginController {
-	
+
 	public static Stage stagePrincipal;
 
 	@FXML
@@ -60,27 +56,32 @@ public class FrmLoginController {
 	}
 
 	public void verificarUsuario() {
-		
-		System.out.println(PropertiesLoaderImpl.getValor("caminho").isEmpty());
 
-		if (PropertiesLoaderImpl.getValor("caminho").isEmpty()) {
+		System.out.println(PropertiesLoaderImpl.getValor("caminho"));
+
+		if (PropertiesLoaderImpl.getValor("URL").isEmpty() || PropertiesLoaderImpl.getValor("USER").isEmpty()
+				|| PropertiesLoaderImpl.getValor("PASSWORD").isEmpty()) {
 			try {
 				Parent parent = FXMLLoader.load(getClass().getClassLoader().getResource("view/FrmCaminhoBanco.fxml"));
 
-				Stage stage = new Stage();
-
 				Scene scene = new Scene(parent);
-				stage.setScene(scene);
-				stage.setTitle("Configuração do banco de dados");
-				stage.show();
+				
+				FrmContainerController.stageCaminhoBanco = new Stage();
+				
+				FrmContainerController.stageCaminhoBanco.setScene(scene);
+				FrmContainerController.stageCaminhoBanco.setTitle("Configuração do banco de dados");
+				FrmContainerController.stageCaminhoBanco.show();
 
 			} catch (IOException e) {
 				e.printStackTrace();
+				System.out.println("Impossível abrir a tela do caminho do banco - FrmLoginController catch exception");
 			}
 		} else {
-			
-			//alimenta o URL para acessar o banco de dados
-			ConnectionFactory.URL += PropertiesLoaderImpl.getValor("caminho");
+
+			// alimenta o URL para acessar o banco de dados
+			ConnectionFactory.URL += PropertiesLoaderImpl.getValor("URL");
+			ConnectionFactory.USU += PropertiesLoaderImpl.getValor("USER");
+			ConnectionFactory.PASS += PropertiesLoaderImpl.getValor("PASSWORD");
 			
 			FrmLoginDAO login = new FrmLoginDAO();
 
@@ -92,21 +93,20 @@ public class FrmLoginController {
 					Parent parent = FXMLLoader.load(getClass().getClassLoader().getResource("view/FrmContainer.fxml"));
 
 					Scene scene = new Scene(parent);
-					
+
 					stagePrincipal = new Stage();
 
 					stagePrincipal.setScene(scene);
 					stagePrincipal.setTitle("Página Principal");
 					stagePrincipal.getIcons().add(new Image("img/iconFrmLogin.png"));
 					stagePrincipal.show();
-					
+
 					Main.primaryStage.close();
 
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
 			} else {
-
 				Alert alert = new Alert(AlertType.WARNING);
 				alert.setHeaderText("Usuário Inválido!");
 				alert.setContentText("Conexão não efetuada!");

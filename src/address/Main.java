@@ -7,10 +7,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import util.PropertiesLoaderImpl;
 
 public class Main extends Application {
 
@@ -27,9 +25,6 @@ public class Main extends Application {
 
 	private void initialize() {
 		try {
-
-			PropertiesLoaderImpl.setValor("caminho", "CAMINHO DE TESTE");
-			
 			Parent parent = FXMLLoader.load(getClass().getClassLoader().getResource("view/FrmLogin.fxml"));
 
 			Scene scene = new Scene(parent);

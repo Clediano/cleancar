@@ -10,10 +10,13 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
 import javafx.stage.DirectoryChooser;
-import javafx.stage.FileChooser;
 import jdbc.ConnectionFactory;
 import util.PropertiesLoaderImpl;
 
@@ -25,23 +28,74 @@ public class FrmCaminhoBancoController implements Initializable{
     private Button btnConfirmar;
 
     @FXML
-    private AnchorPane acnhorCaminhoBanco;
+    private Label lblUsuario;
 
     @FXML
-    private Button btnCaminho;
+    private Button btnFechar;
+
+    @FXML
+    private Button btnEditar;
+
+    @FXML
+    private HBox hBox;
+
+    @FXML
+    private Tab hBoxCadastro;
+
+    @FXML
+    private Button btnIncluir;
+
+    @FXML
+    public TextField txtUser;
+
+    @FXML
+    private Button btnCancelar;
 
     @FXML
     private Button btnTestar;
 
     @FXML
-    private TextField txtURL;
+    public TextField txtURL;
+
+    @FXML
+    private Button btnExcluir;
+
+    @FXML
+    private TabPane tabPane;
+
+    @FXML
+    public PasswordField txtPassword;
+    
+    @FXML
+    void handleIncluir(ActionEvent event) { 	
+    }
+
+    @FXML
+    void handleExcluir(ActionEvent event) {
+    }
+
+    @FXML
+    void handleEditar(ActionEvent event) {
+    	txtURL.setEditable(true);
+		txtUser.setEditable(true);
+		txtPassword.setEditable(true);
+    }
+
+    @FXML
+    void handleCancelar(ActionEvent event) {
+    }
+
+    @FXML
+    void handleFechar(ActionEvent event) {
+    	FrmContainerController.stageCaminhoBanco.close();
+    }
 
     @FXML
     void handleTestar(ActionEvent event) {
     	String drive = "com.mysql.jdbc.Driver";
     	String url = "jdbc:mysql://" + txtURL.getText();
-    	String usu = "root";
-    	String pass = "root";
+    	String usu = txtUser.getText();
+    	String pass = txtPassword.getText();
     	
     	if(ConnectionFactory.testConnection(drive, url, usu, pass)) {
     		Alert alert = new Alert(AlertType.INFORMATION);
@@ -51,7 +105,7 @@ public class FrmCaminhoBancoController implements Initializable{
 			alert.show();
 			
 			btnConfirmar.setDisable(false);
-			PropertiesLoaderImpl.setValor("caminho", txtURL.getText());
+			btnTestar.setDisable(true);
 			
     	}else {
     		Alert alert = new Alert(AlertType.WARNING);
@@ -64,7 +118,12 @@ public class FrmCaminhoBancoController implements Initializable{
 
     @FXML
     void handleConfirmar(ActionEvent event) {
-    	FrmContainerController.stageCaminhoBanco.close();
+    	PropertiesLoaderImpl.setValor("URL", txtURL.getText());
+    	PropertiesLoaderImpl.setValor("USER", txtUser.getText());
+    	PropertiesLoaderImpl.setValor("PASSWORD", txtPassword.getText());
+    	
+    	
+    	FrmContainerController.stageCaminhoBanco.close(); 	
     }
 
     @FXML
@@ -90,6 +149,15 @@ public class FrmCaminhoBancoController implements Initializable{
 			btnConfirmar.setDisable(true);
 		}
 		
+		btnIncluir.setDisable(true);
+		btnExcluir.setDisable(true);
+		btnCancelar.setDisable(true);
+		
+		txtURL.setText(PropertiesLoaderImpl.getValor("URL"));
+		txtURL.setEditable(false);
+		txtUser.setText(PropertiesLoaderImpl.getValor("USER"));
+		txtUser.setEditable(false);
+		txtPassword.setText(PropertiesLoaderImpl.getValor("PASSWORD"));
+		txtPassword.setEditable(false);
 	}
-
 }
