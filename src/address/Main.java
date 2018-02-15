@@ -29,7 +29,7 @@ public class Main extends Application {
 
 			Scene scene = new Scene(parent);
 			primaryStage.setScene(scene);
-			primaryStage.initStyle(StageStyle.UTILITY);
+			primaryStage.initStyle(StageStyle.UNDECORATED);
 			primaryStage.setTitle("Login");
 			primaryStage.show();
 

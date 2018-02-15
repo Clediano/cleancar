@@ -1,56 +1,88 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.image.*?>
-<?import javafx.scene.*?>
-<?import javafx.geometry.*?>
-<?import java.lang.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.layout.BorderPane?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.TilePane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<StackPane snapToPixel="false" stylesheets="@../css/FrmLogin.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.FrmLoginController">
+<StackPane prefHeight="429.0" prefWidth="558.0" snapToPixel="false" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.FrmLoginController">
    <children>
-      <AnchorPane cacheShape="false" centerShape="false" maxHeight="307.0" maxWidth="552.0" minHeight="307.0" minWidth="552.0" prefHeight="307.0" prefWidth="552.0" scaleShape="false" snapToPixel="false" StackPane.alignment="CENTER">
+      <VBox>
          <children>
-            <TextField fx:id="txtUsuario" layoutX="80.0" layoutY="73.0" prefHeight="30.0" prefWidth="428.0" GridPane.rowIndex="1">
-               <GridPane.margin>
-                  <Insets bottom="25.0" left="150.0" right="150.0" />
-               </GridPane.margin>
-            </TextField>
-            <PasswordField fx:id="txtSenha" layoutX="80.0" layoutY="173.0" onKeyPressed="#keyPressed" prefHeight="30.0" prefWidth="428.0" GridPane.rowIndex="3">
-               <GridPane.margin>
-                  <Insets bottom="30.0" left="150.0" right="150.0" />
-               </GridPane.margin>
-            </PasswordField>
-            <Button fx:id="btnConfirmar" layoutX="126.0" layoutY="243.0" mnemonicParsing="false" onAction="#handleConfirmar" onKeyPressed="#keyPressed" prefHeight="41.0" prefWidth="123.0" text="Confirmar">
-               <graphic>
-                  <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../../resource/img/confirm.png" />
-                     </image>
-                  </ImageView>
-               </graphic></Button>
-            <Button fx:id="btnCancelar" layoutX="303.0" layoutY="243.0" mnemonicParsing="false" onAction="#handleCancelar" prefHeight="41.0" prefWidth="123.0" text="Cancelar">
-               <graphic>
-                  <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../../resource/img/decline.png" />
-                     </image>
-                  </ImageView>
-               </graphic></Button>
-            <Label alignment="BOTTOM_LEFT" contentDisplay="BOTTOM" layoutX="80.0" layoutY="43.0" prefHeight="30.0" prefWidth="467.0" text="USUÁRIO" />
-            <Label alignment="BOTTOM_LEFT" contentDisplay="CENTER" layoutX="80.0" layoutY="143.0" prefHeight="30.0" prefWidth="467.0" text="SENHA" GridPane.rowIndex="2" />
-            <ImageView fitHeight="75.0" fitWidth="75.0" layoutX="5.0" layoutY="36.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../resource/img/user.png" />
-               </image>
-            </ImageView>
-            <ImageView fitHeight="75.0" fitWidth="75.0" layoutX="5.0" layoutY="142.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../resource/img/password.png" />
-               </image>
-            </ImageView>
+            <AnchorPane maxHeight="307.0" maxWidth="558.0" minHeight="118.0" minWidth="540.0" prefHeight="126.0" prefWidth="558.0" snapToPixel="false" style="-fx-background-color: #007fff;" />
+            <AnchorPane prefHeight="315.0" prefWidth="558.0" style="-fx-background-color: lightgray;" />
          </children>
-      </AnchorPane>
+      </VBox>
+      <TilePane StackPane.alignment="CENTER">
+         <children>
+            <AnchorPane prefHeight="340.0" prefWidth="455.0" style="-fx-background-color: white; -fx-border-radius: 25px;;" stylesheets="@../css/FrmLogin.css">
+               <children>
+                  <VBox layoutX="20.0" prefHeight="340.0" prefWidth="455.0" style="-fx-border-radius: 25px;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <children>
+                        <ImageView fitHeight="128.0" fitWidth="128.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../resource/img/user.png" />
+                           </image>
+                           <VBox.margin>
+                              <Insets left="175.0" top="25.0" />
+                           </VBox.margin>
+                        </ImageView>
+                        <Label fx:id="lblUsuario" alignment="BOTTOM_LEFT" contentDisplay="BOTTOM" prefHeight="20.0" prefWidth="298.0" text="Usuário" textFill="#3e7574">
+                           <font>
+                              <Font name="Times New Roman" size="17.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets left="100.0" right="100.0" />
+                           </VBox.margin>
+                        </Label>
+                        <TextField fx:id="txtUsuario" alignment="CENTER">
+                           <VBox.margin>
+                              <Insets left="100.0" right="100.0" />
+                           </VBox.margin>
+                        </TextField>
+                        <Label fx:id="lblSenha" alignment="BOTTOM_LEFT" contentDisplay="CENTER" prefHeight="20.0" prefWidth="298.0" text="Senha" textFill="#3e7574">
+                           <font>
+                              <Font name="Times New Roman" size="17.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets left="100.0" right="100.0" top="15.0" />
+                           </VBox.margin>
+                        </Label>
+                        <PasswordField fx:id="txtSenha" alignment="CENTER" onKeyPressed="#keyPressed" prefHeight="26.0" prefWidth="427.0">
+                           <VBox.margin>
+                              <Insets left="100.0" right="100.0" />
+                           </VBox.margin>
+                        </PasswordField>
+                        <HBox alignment="CENTER">
+                           <children>
+                              <Button fx:id="btnConfirmar" contentDisplay="CENTER" mnemonicParsing="false" onAction="#handleConfirmar" onKeyPressed="#keyPressed" prefHeight="40.0" prefWidth="105.0" text="Confirmar">
+                                 <HBox.margin>
+                                    <Insets right="50.0" />
+                                 </HBox.margin>
+                              </Button>
+                              <Button fx:id="btnCancelar" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onAction="#handleCancelar" prefHeight="40.0" prefWidth="105.0" text="Cancelar" />
+                           </children>
+                           <VBox.margin>
+                              <Insets left="100.0" right="100.0" top="20.0" />
+                           </VBox.margin>
+                        </HBox>
+                     </children>
+                  </VBox>
+               </children>
+               <TilePane.margin>
+                  <Insets bottom="50.0" left="50.0" right="50.0" top="50.0" />
+               </TilePane.margin>
+            </AnchorPane>
+         </children>
+      </TilePane>
    </children>
 </StackPane>

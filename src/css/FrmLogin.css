@@ -1,14 +1,24 @@
-.label {
-	-fx-font-size: 15px;
-}
 .button{
+	-fx-background-color: #007fff;
+	-fx-font-size: 12px;
+	-fx-font-family: System;
 	-fx-text-fill: white;
-	-fx-background-color: linear-gradient(#61a2b1, #2A5058);
-	-fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.6), 5, 0.0, 0, 1);
 }
 .button:hover{
-	-fx-background-color: rgba(31, 149, 206, 0.71);
+	-fx-background-color: rgba(55, 151, 248, 1.0);
+	-fx-border-radius: 20px;
 }
-.stack{
-	-fx-background-color: transparent;
+.label{
+	-fx-text-fill: #3e7574;
+	-fx-font-size: 17px;
+	-fx-font-family: Times New Roman;
+}
+#txtUsuario {
+    -fx-background-color: #a9a9a9 , white , white;
+    -fx-background-insets: 0 -1 -1 -1, 0 0 0 0, 0 -1 3 -1;
+}
+
+#txtSenha {
+    -fx-background-color: #a9a9a9 , white , white;
+    -fx-background-insets: 0 -1 -1 -1, 0 0 0 0, 0 -1 3 -1;
 }

@@ -7,4 +7,5 @@
 }
 .button:hover{
 	-fx-background-color: rgba(31, 149, 206, 0.71);
+	-fx-border-radius: 2.0%;
 }
