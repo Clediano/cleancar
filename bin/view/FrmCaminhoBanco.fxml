@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="512.0" prefWidth="734.0" stylesheets="@../../bin/css/FrmCaminhoBanco.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.FrmCaminhoBancoController">
+   <top>
+      <TitledPane prefWidth="654.0" text="Opções">
+         <content>
+            <VBox>
+               <children>
+                  <HBox fx:id="hBox" BorderPane.alignment="CENTER">
+                     <children>
+                        <Button fx:id="btnIncluir" mnemonicParsing="false" onAction="#handleIncluir" prefHeight="25.0" prefWidth="49.0" text="Incluir">
+                           <HBox.margin>
+                              <Insets left="10.0" top="8.0" />
+                           </HBox.margin>
+                        </Button>
+                        <Button fx:id="btnExcluir" mnemonicParsing="false" onAction="#handleExcluir" text="Excluir">
+                           <HBox.margin>
+                              <Insets left="10.0" top="8.0" />
+                           </HBox.margin>
+                        </Button>
+                        <Button fx:id="btnEditar" mnemonicParsing="false" onAction="#handleEditar" text="Editar">
+                           <HBox.margin>
+                              <Insets left="10.0" top="8.0" />
+                           </HBox.margin>
+                        </Button>
+                        <Button fx:id="btnCancelar" mnemonicParsing="false" onAction="#handleCancelar" text="Cancelar">
+                           <HBox.margin>
+                              <Insets left="10.0" right="5.0" top="8.0" />
+                           </HBox.margin>
+                        </Button>
+                        <Separator orientation="VERTICAL" prefHeight="50.0" prefWidth="6.0">
+                           <HBox.margin>
+                              <Insets bottom="5.0" />
+                           </HBox.margin>
+                        </Separator>
+                        <Button fx:id="btnFechar" mnemonicParsing="false" onAction="#handleFechar" text="Fechar">
+                           <HBox.margin>
+                              <Insets left="5.0" top="8.0" />
+                           </HBox.margin>
+                        </Button>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER_RIGHT" />
+               </children>
+            </VBox>
+         </content>
+      </TitledPane>
+   </top>
+   <center>
+      <TabPane fx:id="tabPane" prefHeight="371.0" prefWidth="654.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
+        <tabs>
+          <Tab fx:id="hBoxCadastro" text="Cadastro">
+               <content>
+                  <TilePane alignment="CENTER" prefHeight="200.0" prefWidth="200.0">
+                     <children>
+                        <GridPane prefHeight="349.0" prefWidth="719.0">
+                          <columnConstraints>
+                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="233.0" minWidth="10.0" prefWidth="110.0" />
+                              <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="427.0" minWidth="10.0" prefWidth="420.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="165.0" minWidth="10.0" prefWidth="119.0" />
+                          </columnConstraints>
+                          <rowConstraints>
+                              <RowConstraints maxHeight="105.0" minHeight="10.0" prefHeight="105.0" vgrow="SOMETIMES" />
+                              <RowConstraints maxHeight="68.0" minHeight="10.0" prefHeight="41.0" vgrow="SOMETIMES" />
+                              <RowConstraints maxHeight="116.0" minHeight="10.0" prefHeight="39.0" vgrow="SOMETIMES" />
+                            <RowConstraints fillHeight="false" maxHeight="146.0" minHeight="10.0" prefHeight="67.0" vgrow="SOMETIMES" />
+                              <RowConstraints fillHeight="false" maxHeight="146.0" minHeight="10.0" prefHeight="54.0" vgrow="SOMETIMES" />
+                              <RowConstraints fillHeight="false" maxHeight="60.0" minHeight="10.0" prefHeight="60.0" vgrow="SOMETIMES" />
+                          </rowConstraints>
+                           <children>
+                              <VBox alignment="CENTER" GridPane.columnIndex="1">
+                                 <children>
+                                    <Label text="Configure o caminho e o usuarios da base de dados" />
+                                    <ImageView fitHeight="75.0" fitWidth="140.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../../resource/img/databaseIcon.png" />
+                                       </image>
+                                    </ImageView>
+                                 </children>
+                              </VBox>
+                              <Label fx:id="lblUsuario" contentDisplay="CENTER" text="CAMINHO DA BASE DE DADOS" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="1" GridPane.valignment="BOTTOM" />
+                              <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
+                                 <children>
+                                    <Button fx:id="btnTestar" mnemonicParsing="false" onAction="#handleTestar" text="Testar">
+                                       <HBox.margin>
+                                          <Insets />
+                                       </HBox.margin>
+                                    </Button>
+                                    <Button fx:id="btnConfirmar" mnemonicParsing="false" onAction="#handleConfirmar" text="Confirmar">
+                                       <HBox.margin>
+                                          <Insets left="50.0" />
+                                       </HBox.margin>
+                                    </Button>
+                                 </children>
+                              </HBox>
+                              <TextField fx:id="txtURL" prefHeight="39.0" prefWidth="427.0" promptText="Exemple: localhost/DBName" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                              <HBox alignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                                 <children>
+                                    <VBox prefHeight="64.0" prefWidth="178.0" GridPane.columnIndex="1" GridPane.rowIndex="3" HBox.hgrow="SOMETIMES">
+                                       <children>
+                                          <Label text="USER">
+                                             <VBox.margin>
+                                                <Insets top="10.0" />
+                                             </VBox.margin>
+                                          </Label>
+                                          <TextField fx:id="txtUser" prefHeight="33.0" prefWidth="182.0">
+                                             <VBox.margin>
+                                                <Insets right="25.0" />
+                                             </VBox.margin>
+                                          </TextField>
+                                       </children>
+                                    </VBox>
+                                    <VBox prefHeight="64.0" prefWidth="191.0" HBox.hgrow="SOMETIMES">
+                                       <children>
+                                          <Label text="PASSWORD">
+                                             <VBox.margin>
+                                                <Insets left="25.0" top="10.0" />
+                                             </VBox.margin>
+                                          </Label>
+                                          <PasswordField fx:id="txtPassword" prefHeight="33.0" prefWidth="182.0">
+                                             <VBox.margin>
+                                                <Insets left="25.0" />
+                                             </VBox.margin>
+                                          </PasswordField>
+                                       </children>
+                                    </VBox>
+                                 </children>
+                              </HBox>
+                              <Button fx:id="btnCaminho" mnemonicParsing="false" onAction="#handleCaminho" prefHeight="25.0" prefWidth="28.0" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="2">
+                                 <graphic>
+                                    <ImageView fitHeight="26.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../../resource/img/folder.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                              </Button>
+                           </children>
+                        </GridPane>
+                     </children>
+                  </TilePane>
+               </content></Tab>
+        </tabs>
+      </TabPane>
+   </center>
+</BorderPane>

@@ -24,6 +24,8 @@ import util.PropertiesLoaderImpl;
 public class FrmLoginController {
 
 	public static Stage stagePrincipal;
+	
+	public static Stage stageFrmCaminhoBanco;
 
 	@FXML
 	private Button btnConfirmar;
@@ -57,32 +59,31 @@ public class FrmLoginController {
 
 	public void verificarUsuario() {
 
-		System.out.println(PropertiesLoaderImpl.getValor("caminho"));
-
 		if (PropertiesLoaderImpl.getValor("URL").isEmpty() || PropertiesLoaderImpl.getValor("USER").isEmpty()
 				|| PropertiesLoaderImpl.getValor("PASSWORD").isEmpty()) {
+
 			try {
-				Parent parent = FXMLLoader.load(getClass().getClassLoader().getResource("view/FrmCaminhoBanco.fxml"));
-
-				Scene scene = new Scene(parent);
+				Parent parentFrmCaminhoBanco = FXMLLoader.load(getClass().getClassLoader().getResource("view/FrmCaminhoBanco.fxml"));
 				
-				Stage stageCaminhoBanco = new Stage();
+				stageFrmCaminhoBanco = new Stage();
 				
-				stageCaminhoBanco.setScene(scene);
-				stageCaminhoBanco.setTitle("Configuração do banco de dados");
-				stageCaminhoBanco.show();
-
+				Scene scene = new Scene(parentFrmCaminhoBanco);
+				
+				stageFrmCaminhoBanco.setScene(scene);
+				stageFrmCaminhoBanco.setTitle("Configurando o banco de dados!");
+				stageFrmCaminhoBanco.show();
+				
 			} catch (IOException e) {
 				e.printStackTrace();
-				System.out.println("Impossível abrir a tela do caminho do banco - FrmLoginController catch exception");
 			}
+
 		} else {
 
 			// alimenta o URL para acessar o banco de dados
 			ConnectionFactory.URL += PropertiesLoaderImpl.getValor("URL");
 			ConnectionFactory.USU += PropertiesLoaderImpl.getValor("USER");
 			ConnectionFactory.PASS += PropertiesLoaderImpl.getValor("PASSWORD");
-			
+
 			FrmLoginDAO login = new FrmLoginDAO();
 
 			String nome = txtUsuario.getText();

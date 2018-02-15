@@ -108,9 +108,7 @@ public class FrmContainerController {
 	@SuppressWarnings("static-access")
 	@FXML
 	void handleBanco(ActionEvent event) {
-
 		mostrarTelaBanco();
-
 	}
 	
 	@SuppressWarnings("static-access")
