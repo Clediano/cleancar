@@ -3,7 +3,7 @@ package model;
 import java.sql.Date;
 
 public class Clientes {
-	
+
 	private Integer codigo;
 	private String nome;
 	private String sobrenome;
@@ -21,51 +21,65 @@ public class Clientes {
 		this.telefone = telefone;
 		this.dataCadastro = dtaCadastro;
 	}
+
 	public Clientes() {
 		super();
 	}
+
 	public Integer getCodigo() {
 		return codigo;
 	}
+
 	public void setCodigo(Integer codigo) {
 		this.codigo = codigo;
 	}
+
 	public String getNome() {
 		return nome;
 	}
+
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
+
 	public String getSobrenome() {
 		return sobrenome;
 	}
+
 	public void setSobrenome(String sobrenome) {
 		this.sobrenome = sobrenome;
 	}
+
 	public String getCnpj() {
 		return cnpj;
 	}
+
 	public void setCnpj(String cnpj) {
 		this.cnpj = cnpj;
 	}
+
 	public String getEmail() {
 		return email;
 	}
+
 	public void setEmail(String email) {
 		this.email = email;
 	}
+
 	public Integer getTelefone() {
 		return telefone;
 	}
+
 	public void setTelefone(Integer telefone) {
 		this.telefone = telefone;
 	}
+
 	public Date getDataCadastro() {
 		return dataCadastro;
 	}
+
 	public void setDataCadastro(Date dataCadastro) {
 		this.dataCadastro = dataCadastro;
 	}
 
-	
 }
