@@ -60,7 +60,7 @@ public class FrmCadastroClienteDAO {
 					"insert into clientes (cli_nome, cli_sobrenome, cli_cnpj, cli_email, cli_telefone, cli_data_cadastro) values (?,?,?,?,?,?);");
 			ps.setString(1, cliente.getNome());
 			ps.setString(2, cliente.getSobrenome());
-			ps.setString(3, cliente.getCnpj());
+			ps.setInt(3, cliente.getCnpj());
 			ps.setString(4, cliente.getEmail());
 			ps.setInt(5, cliente.getTelefone());
 			ps.setDate(6, (Date)cliente.getDataCadastro());
@@ -70,10 +70,35 @@ public class FrmCadastroClienteDAO {
 			}
 
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return false;
+	}
+	
+	/**
+	 * Retorna o código do proximo usuário a ser adicioando
+	 * 
+	 * @return integer
+	 */
+	public Integer proximoCodigoCliente() {
+		Connection conn = new ConnectionFactory().getConnection();
+		PreparedStatement ps;
+		ResultSet rs;
+
+		try {
+			ps = conn.prepareStatement(
+					"select max(id_cliente) from clientes;");
+
+			rs = ps.executeQuery();
+
+			if (rs.next()) {
+				return rs.getRow();
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return 0;
 	}
 
 	/**
@@ -99,7 +124,7 @@ public class FrmCadastroClienteDAO {
 				cliente.setCodigo(rs.getInt(1));
 				cliente.setNome(rs.getString(2));
 				cliente.setSobrenome(rs.getString(3));
-				cliente.setCnpj(rs.getString(4));
+				cliente.setCnpj(rs.getInt(4));
 				cliente.setEmail(rs.getString(5));
 				cliente.setTelefone(rs.getInt(6));
 				cliente.setDataCadastro(rs.getDate(7));
@@ -139,7 +164,7 @@ public class FrmCadastroClienteDAO {
 				cliente.setCodigo(rs.getInt(1));
 				cliente.setNome(rs.getString(2));
 				cliente.setSobrenome(rs.getString(3));
-				cliente.setCnpj(rs.getString(4));
+				cliente.setCnpj(rs.getInt(4));
 				cliente.setEmail(rs.getString(5));
 				cliente.setDataCadastro(rs.getDate(6));
 

@@ -87,6 +87,7 @@ public class FrmCaminhoBancoController implements Initializable {
 
 	@FXML
 	void handleCancelar(ActionEvent event) {
+		
 	}
 
 	@FXML

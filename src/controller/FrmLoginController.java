@@ -26,8 +26,10 @@ public class FrmLoginController {
 
 	public static Stage stagePrincipal;
 	
-	public static Stage stageFrmCaminhoBanco;
-
+	//crio o objeto aqui para a classeFrmCaminhoBanco saber se está aberto ou não a tela(isShowing) 
+																	//se não iniciar aqui da erro de nullPointer Exception
+	public static Stage stageFrmCaminhoBanco = new Stage(); 
+	
 	@FXML
 	private Button btnConfirmar;
 	
@@ -72,7 +74,6 @@ public class FrmLoginController {
 			try {
 				Parent parentFrmCaminhoBanco = FXMLLoader.load(getClass().getClassLoader().getResource("view/FrmCaminhoBanco.fxml"));
 				
-				stageFrmCaminhoBanco = new Stage();
 				
 				Scene scene = new Scene(parentFrmCaminhoBanco);
 				

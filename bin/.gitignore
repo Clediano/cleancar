@@ -1,8 +1,5 @@
-/css/
-/address/
-/controller/
-/img/
-/util/
 /view/
+/controller/
 /dao/
+/util/
 /model/

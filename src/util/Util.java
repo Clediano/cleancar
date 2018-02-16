@@ -8,59 +8,24 @@ import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.geometry.Pos;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
 
 public class Util {
 
-	/**
-	 * Monta a mascara para os campos CNPJ.
-	 *
-	 * @param textField
-	 *            TextField
-	 */
-	public static void cnpjField(final TextField textField) {
-		maxField(textField, 15);
 
-		textField.lengthProperty().addListener(new ChangeListener<Number>() {
-			@Override
-			public void changed(ObservableValue<? extends Number> observableValue, Number number, Number number2) {
-				String value = textField.getText();
-				value = value.replaceAll("[^0-9]", "");
-				value = value.replaceFirst("(\\d{2})(\\d)", "$1.$2");
-				value = value.replaceFirst("(\\d{2})\\.(\\d{3})(\\d)", "$1.$2.$3");
-				value = value.replaceFirst("\\.(\\d{3})(\\d)", ".$1/$2");
-				value = value.replaceFirst("(\\d{4})(\\d)", "$1-$2");
-				textField.setText(value);
-				positionCaret(textField);
-			}
-		});
+	public static Integer formatTelefone(String telefone) {
+		return Integer.parseInt(telefone.replaceAll("(-)", ""));
 	}
-
-	/**
-	 * Monta a mascara para os campos CNPJ.
-	 *
-	 * @param textField
-	 *            TextField
-	 */
-	public static void cpfField(final TextField textField) {
-		maxField(textField, 11);
-
-		textField.lengthProperty().addListener(new ChangeListener<Number>() {
-			@Override
-			public void changed(ObservableValue<? extends Number> observableValue, Number number, Number number2) {
-				String value = textField.getText();
-				value = value.replaceAll("[^0-9]", "");
-				value = value.replaceFirst("(\\d{3})(\\d)", "$1.$3");
-				value = value.replaceFirst("(\\d{3})\\.(\\d{3})(\\d)", "$1.$2.$3");
-				value = value.replaceFirst("\\.(\\d{3})(\\d)", ".$1/$2");
-				value = value.replaceFirst("(\\d{4})(\\d)", "$1-$2");
-				textField.setText(value);
-				positionCaret(textField);
-			}
-		});
+	
+	public static Integer formatCpfCnpj(String CpfCnpj) {
+		return Integer.parseInt(CpfCnpj.replaceAll("./-", ""));
 	}
-
+	
+	
 	/**
 	 * Recebe um LocaDate e retorna um Date
 	 * 
@@ -169,5 +134,17 @@ public class Util {
 				textField.positionCaret(textField.getText().length());
 			}
 		});
+	}
+	/**
+	 * Mostra uma mensagem de confirmação para a exclusao de algum ítem.
+	 */
+	public static ButtonType alertaExclusao() {
+		Alert alerta = new Alert(AlertType.CONFIRMATION);
+		alerta.setTitle("Confirmar Exclusão!?");
+		alerta.setHeaderText("Tem certeza que deseja excluir?");
+		alerta.setContentText("O processo a seguir é irreversível.");
+		alerta.show();
+		
+		return alerta.getResult();
 	}
 }

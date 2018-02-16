@@ -7,12 +7,12 @@ public class Clientes {
 	private Integer codigo;
 	private String nome;
 	private String sobrenome;
-	private String cnpj;
+	private Integer cnpj;
 	private String email;
 	private Integer telefone;
 	private Date dataCadastro;
 
-	public Clientes(String nome, String sobrenome, String cnpj, String email, Integer telefone, Date dtaCadastro) {
+	public Clientes(String nome, String sobrenome, Integer cnpj, String email, Integer telefone, Date dtaCadastro) {
 		super();
 		this.nome = nome;
 		this.sobrenome = sobrenome;
@@ -50,11 +50,11 @@ public class Clientes {
 		this.sobrenome = sobrenome;
 	}
 
-	public String getCnpj() {
+	public Integer getCnpj() {
 		return cnpj;
 	}
 
-	public void setCnpj(String cnpj) {
+	public void setCnpj(Integer cnpj) {
 		this.cnpj = cnpj;
 	}
 
