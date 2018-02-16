@@ -7,12 +7,13 @@ public class Clientes {
 	private Integer codigo;
 	private String nome;
 	private String sobrenome;
-	private Integer cnpj;
+	private String cnpj;
 	private String email;
-	private Integer telefone;
+	private String telefone;
+	private String pessoa;
 	private Date dataCadastro;
 
-	public Clientes(String nome, String sobrenome, Integer cnpj, String email, Integer telefone, Date dtaCadastro) {
+	public Clientes(String nome, String sobrenome, String cnpj, String email, String telefone, Date dtaCadastro) {
 		super();
 		this.nome = nome;
 		this.sobrenome = sobrenome;
@@ -50,11 +51,11 @@ public class Clientes {
 		this.sobrenome = sobrenome;
 	}
 
-	public Integer getCnpj() {
+	public String getCnpj() {
 		return cnpj;
 	}
 
-	public void setCnpj(Integer cnpj) {
+	public void setCnpj(String cnpj) {
 		this.cnpj = cnpj;
 	}
 
@@ -66,11 +67,11 @@ public class Clientes {
 		this.email = email;
 	}
 
-	public Integer getTelefone() {
+	public String getTelefone() {
 		return telefone;
 	}
 
-	public void setTelefone(Integer telefone) {
+	public void setTelefone(String telefone) {
 		this.telefone = telefone;
 	}
 
@@ -80,6 +81,14 @@ public class Clientes {
 
 	public void setDataCadastro(Date dataCadastro) {
 		this.dataCadastro = dataCadastro;
+	}
+
+	public String getPessoa() {
+		return pessoa;
+	}
+
+	public void setPessoa(String pessoa) {
+		this.pessoa = pessoa;
 	}
 
 }

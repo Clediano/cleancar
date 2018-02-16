@@ -1,7 +1,6 @@
 package dao;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -57,13 +56,14 @@ public class FrmCadastroClienteDAO {
 
 		try {
 			ps = conn.prepareStatement(
-					"insert into clientes (cli_nome, cli_sobrenome, cli_cnpj, cli_email, cli_telefone, cli_data_cadastro) values (?,?,?,?,?,?);");
+					"insert into clientes (cli_nome, cli_sobrenome, cli_cnpj, cli_email, cli_telefone, cli_data_cadastro, cli_pessoa) values (?,?,?,?,?,?,?);");
 			ps.setString(1, cliente.getNome());
 			ps.setString(2, cliente.getSobrenome());
-			ps.setInt(3, cliente.getCnpj());
+			ps.setString(3, cliente.getCnpj());
 			ps.setString(4, cliente.getEmail());
-			ps.setInt(5, cliente.getTelefone());
-			ps.setDate(6, (Date)cliente.getDataCadastro());
+			ps.setString(5, cliente.getTelefone());
+			ps.setDate(6, cliente.getDataCadastro());
+			ps.setString(7, cliente.getPessoa());
 
 			if (ps.executeUpdate() != 0) {
 				return true;
@@ -92,13 +92,13 @@ public class FrmCadastroClienteDAO {
 			rs = ps.executeQuery();
 
 			if (rs.next()) {
-				return rs.getRow();
+				return rs.getInt(1) + 1;
 			}
 
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return 0;
+		return null;
 	}
 
 	/**
@@ -124,10 +124,11 @@ public class FrmCadastroClienteDAO {
 				cliente.setCodigo(rs.getInt(1));
 				cliente.setNome(rs.getString(2));
 				cliente.setSobrenome(rs.getString(3));
-				cliente.setCnpj(rs.getInt(4));
+				cliente.setCnpj(rs.getString(4));
 				cliente.setEmail(rs.getString(5));
-				cliente.setTelefone(rs.getInt(6));
-				cliente.setDataCadastro(rs.getDate(7));
+				cliente.setTelefone(rs.getString(6));
+				cliente.setPessoa(rs.getString(7));
+				cliente.setDataCadastro(rs.getDate(8));
 
 				lista.add(cliente);
 			}
@@ -164,7 +165,7 @@ public class FrmCadastroClienteDAO {
 				cliente.setCodigo(rs.getInt(1));
 				cliente.setNome(rs.getString(2));
 				cliente.setSobrenome(rs.getString(3));
-				cliente.setCnpj(rs.getInt(4));
+				cliente.setCnpj(rs.getString(4));
 				cliente.setEmail(rs.getString(5));
 				cliente.setDataCadastro(rs.getDate(6));
 
@@ -245,15 +246,29 @@ public class FrmCadastroClienteDAO {
 	 *            - Usuário a ser editado
 	 * @return Boolean
 	 */
-	public boolean editarUsuario(Usuarios usuarios) {
+	public boolean editarCliente(Clientes cliente) {
 		Connection conn = new ConnectionFactory().getConnection();
 		PreparedStatement ps;
 
 		try {
-			ps = conn.prepareStatement("UPDATE usuarios SET usu_senha = ? WHERE  idusuarios = ?;");
-			ps.setString(1, usuarios.getSenha());
-			ps.setInt(2, usuarios.getCodigo());
-
+			ps = conn.prepareStatement("UPDATE usuarios SET "
+					+ "cli_nome = ?, "
+					+ "cli_sobrenome = ?, "
+					+ "cli_cnpj = ?, "
+					+ "cli_email = ?, "
+					+ "cli_telefone = ?, "
+					+ "cli_data_cadastro = ?, "
+					+ "cli_pessoa = ? WHERE  id_cliente = ?;");
+			
+			ps.setString(1, cliente.getNome());
+			ps.setString(2, cliente.getSobrenome());
+			ps.setString(3, cliente.getCnpj());
+			ps.setString(4, cliente.getEmail());
+			ps.setString(5, cliente.getTelefone());
+			ps.setDate(6, cliente.getDataCadastro());
+			ps.setString(7, cliente.getPessoa());
+			ps.setInt(8, cliente.getCodigo());
+			
 			if (ps.executeUpdate() != 0) {
 				return true;
 			}

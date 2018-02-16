@@ -1,28 +1,44 @@
 package util;
 
-import java.time.LocalDate;
-import java.time.ZoneId;
 import java.sql.Date;
+import java.time.LocalDate;
 
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.scene.control.Alert.AlertType;
 
 public class Util {
 
 
-	public static Integer formatTelefone(String telefone) {
-		return Integer.parseInt(telefone.replaceAll("(-)", ""));
+	public static Integer formatTelefone(TextField telefone) {
+		String fone = telefone.getText();
+		
+		fone = fone.replace("(", "");
+		fone = fone.replace(")", "");
+		fone = fone.replace("-", "");
+
+		System.out.println(fone);
+		
+		return Integer.parseInt(fone);
 	}
 	
-	public static Integer formatCpfCnpj(String CpfCnpj) {
-		return Integer.parseInt(CpfCnpj.replaceAll("./-", ""));
+	public static Integer formatCpfCnpj(TextField CpfCnpj) {
+		String cod = CpfCnpj.getText();
+		
+		cod = cod.replace(".", "");
+		cod = cod.replace(".", "");
+		cod = cod.replace("/", "");
+		cod = cod.replace("-", "");
+		
+		System.out.println(cod);
+		
+		return Integer.parseInt(cod);
 	}
 	
 	
@@ -34,6 +50,16 @@ public class Util {
 	 */
 	public static Date asDate(LocalDate localDate) {
 		return java.sql.Date.valueOf(localDate);
+	}
+	
+	/**
+	 * Recebe um Date e retorna um LocalDate
+	 * 
+	 * @param localDate
+	 * @return
+	 */
+	public static LocalDate asLocalDate(Date date) {
+		return LocalDate.parse(date.toString());
 	}
 
 	/**
@@ -143,7 +169,7 @@ public class Util {
 		alerta.setTitle("Confirmar Exclusão!?");
 		alerta.setHeaderText("Tem certeza que deseja excluir?");
 		alerta.setContentText("O processo a seguir é irreversível.");
-		alerta.show();
+		alerta.showAndWait();
 		
 		return alerta.getResult();
 	}
