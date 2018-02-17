@@ -12,6 +12,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ChoiceBox;
@@ -23,6 +24,7 @@ import javafx.scene.control.TabPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -35,7 +37,7 @@ import util.Util;
 public class FrmCadastroClienteController implements Initializable {
 
 	private FrmCadastroClienteDAO cadastroCliente;
-	public boolean editar = false;
+	public boolean botaoEditarClicado = false;
 
 	@FXML
 	private DatePicker txtDate;
@@ -114,7 +116,7 @@ public class FrmCadastroClienteController implements Initializable {
 
 	@FXML
 	private TableColumn<String, Clientes> tblColumnCnpjCpf;
-	
+
 	@FXML
 	private TableColumn<String, Clientes> tblColumnPessoa;
 
@@ -139,7 +141,7 @@ public class FrmCadastroClienteController implements Initializable {
 
 	@FXML
 	void handleGravar(ActionEvent event) {
-		if(!editar) {
+		if (!botaoEditarClicado) {
 			Clientes cliente = new Clientes();
 
 			cliente.setNome(txtNome.getText());
@@ -151,14 +153,16 @@ public class FrmCadastroClienteController implements Initializable {
 			cliente.setDataCadastro(Util.asDate(txtDate.getValue()));
 
 			cadastroCliente.cadastrarCliente(cliente);
-			
+
 			alimentarTable();
-			
+			limparTelaCadastro();
+
 			SingleSelectionModel<Tab> selectionModel = tabPane.getSelectionModel();
 			selectionModel.select(hBoxConsulta);
-		}else {
+
+		} else {
 			Clientes cliente = new Clientes();
-			
+
 			cliente.setCodigo(Integer.parseInt(lblCodigo.getText()));
 			cliente.setNome(txtNome.getText());
 			cliente.setSobrenome(txtSobrenome.getText());
@@ -169,15 +173,15 @@ public class FrmCadastroClienteController implements Initializable {
 			cliente.setDataCadastro(Util.asDate(txtDate.getValue()));
 
 			cadastroCliente.editarCliente(cliente);
-			
+			botaoEditarClicado = false;
+
 			alimentarTable();
-			
+			limparTelaCadastro();
+
 			SingleSelectionModel<Tab> selectionModel = tabPane.getSelectionModel();
 			selectionModel.select(hBoxConsulta);
-			
-			editar = false;
 		}
-		
+
 	}
 
 	@FXML
@@ -190,39 +194,42 @@ public class FrmCadastroClienteController implements Initializable {
 		SingleSelectionModel<Tab> selectionModel = tabPane.getSelectionModel();
 		selectionModel.select(hBoxCadastro);
 
-		tipoPessoa.setValue("Física");
+		limparTelaCadastro();
+		habilitarCamposCadastro();
 
 		txtNome.setFocusTraversable(true);
+
+		tipoPessoa.setValue("Física");
 		txtNome.requestFocus();
 		lblCodigo.setText(new FrmCadastroClienteDAO().proximoCodigoCliente().toString());
 		txtDate.setValue(LocalDate.now());
 	}
-	
-    @FXML
-    private void textFieldCelularRelease() {
-    	TextFieldFormatter tff = new TextFieldFormatter();
-    	tff.setMask("(##)#####-####");
-    	tff.setCaracteresValidos("0123456789");
-    	tff.setTf(txtTelefone);
-    	tff.formatter();
-    }
+
+	@FXML
+	private void textFieldCelularRelease() {
+		TextFieldFormatter tff = new TextFieldFormatter();
+		tff.setMask("(##)#####-####");
+		tff.setCaracteresValidos("0123456789");
+		tff.setTf(txtTelefone);
+		tff.formatter();
+	}
 
 	@FXML
 	void handleExcluir(ActionEvent event) {
-		if(tblClientes.getSelectionModel().getSelectedItem() != null) {
-			if(Util.alertaExclusao() == ButtonType.OK) {
+		if (tblClientes.getSelectionModel().getSelectedItem() != null) {
+			if (Util.alertaExclusao() == ButtonType.OK) {
 				Clientes cliente = tblClientes.getSelectionModel().getSelectedItem();
-				new FrmCadastroClienteDAO().removerCliente(cliente.getCodigo());	
+				new FrmCadastroClienteDAO().removerCliente(cliente.getCodigo());
 			}
 			alimentarTable();
 		}
 	}
-	
-    @FXML
-    void abrirClienteSelecionado(MouseEvent event) {
-		if(event.getClickCount() == 2) {
+
+	@FXML
+	void abrirClienteSelecionado(MouseEvent event) {
+		if (event.getClickCount() == 2) {
 			Clientes cliente = tblClientes.getSelectionModel().getSelectedItem();
-			
+
 			cliente.setCodigo(cliente.getCodigo());
 			cliente.setNome(cliente.getNome());
 			cliente.setSobrenome(cliente.getSobrenome());
@@ -230,18 +237,18 @@ public class FrmCadastroClienteController implements Initializable {
 			cliente.setCnpj(cliente.getCnpj());
 			cliente.setPessoa(cliente.getPessoa());
 			cliente.setDataCadastro(cliente.getDataCadastro());
-			
+
 			alimentarTelaCadastro(cliente);
-			
+
 			desabilitarCamposCadastro();
-			
+
 			SingleSelectionModel<Tab> selectionModel = tabPane.getSelectionModel();
-			selectionModel.select(hBoxCadastro);	
+			selectionModel.select(hBoxCadastro);
 		}
-    }
-    
-    public void desabilitarCamposCadastro() {
-    	lblCodigo.setDisable(true);
+	}
+
+	public void desabilitarCamposCadastro() {
+		lblCodigo.setDisable(true);
 		txtNome.setDisable(true);
 		txtSobrenome.setDisable(true);
 		txtTelefone.setDisable(true);
@@ -250,10 +257,10 @@ public class FrmCadastroClienteController implements Initializable {
 		txtEmail.setDisable(true);
 		txtDate.setDisable(true);
 		btnGravar.setDisable(true);
-    }
-    
-    public void habilitarCamposCadastro() {
-    	lblCodigo.setDisable(false);
+	}
+
+	public void habilitarCamposCadastro() {
+		lblCodigo.setDisable(false);
 		txtNome.setDisable(false);
 		txtSobrenome.setDisable(false);
 		txtTelefone.setDisable(false);
@@ -262,14 +269,14 @@ public class FrmCadastroClienteController implements Initializable {
 		txtEmail.setDisable(false);
 		txtDate.setDisable(false);
 		btnGravar.setDisable(false);
-    }
+	}
 
 	@FXML
 	void handleEditar(ActionEvent event) {
-		if(tblClientes.getSelectionModel().getSelectedItem() != null) {
-			
+		if (tblClientes.getSelectionModel().getSelectedItem() != null) {
+
 			Clientes cliente = tblClientes.getSelectionModel().getSelectedItem();
-			
+
 			cliente.setCodigo(cliente.getCodigo());
 			cliente.setNome(cliente.getNome());
 			cliente.setSobrenome(cliente.getSobrenome());
@@ -277,16 +284,16 @@ public class FrmCadastroClienteController implements Initializable {
 			cliente.setCnpj(cliente.getCnpj());
 			cliente.setPessoa(cliente.getPessoa());
 			cliente.setDataCadastro(cliente.getDataCadastro());
-			
+
 			alimentarTelaCadastro(cliente);
-			
+
 			SingleSelectionModel<Tab> selectionModel = tabPane.getSelectionModel();
 			selectionModel.select(hBoxCadastro);
 		}
 		habilitarCamposCadastro();
-		editar = true;
+		botaoEditarClicado = true;
 	}
-	
+
 	public void alimentarTelaCadastro(Clientes cliente) {
 		lblCodigo.setText(cliente.getCodigo().toString());
 		txtNome.setText(cliente.getNome());
@@ -298,9 +305,21 @@ public class FrmCadastroClienteController implements Initializable {
 		txtDate.setValue(Util.asLocalDate(cliente.getDataCadastro()));
 	}
 
+	public void limparTelaCadastro() {
+		txtNome.setText("");
+		txtSobrenome.setText("");
+		txtTelefone.setText("");
+		txtCnpjCpf.setText("");
+		txtEmail.setText("");
+		tipoPessoa.setValue("Física");
+		lblCodigo.setText(new FrmCadastroClienteDAO().proximoCodigoCliente().toString());
+		txtDate.setValue(LocalDate.now());
+	}
+
 	@FXML
 	void handleCancelar(ActionEvent event) {
-		FrmContainerController.parentFrmCadastro.setVisible(false);
+		SingleSelectionModel<Tab> selectionModel = tabPane.getSelectionModel();
+		selectionModel.select(hBoxConsulta);
 	}
 
 	@FXML
@@ -310,35 +329,85 @@ public class FrmCadastroClienteController implements Initializable {
 
 	@FXML
 	void onKeySearchPressed(KeyEvent event) {
-		if(event.getCode() == KeyCode.ENTER) {
-			
+		if (event.getCode() == KeyCode.ENTER) {
+			if (choiceFilter.getValue().equals("ID")) {
+				if (txtFilter.getText().equals("")) {
+					alimentarTable();
+				} else {
+					try {
+						tblClientes.setItems(cadastroCliente.capturarClientesId(Integer.parseInt(txtFilter.getText())));
+					} catch (NumberFormatException e) {
+						Alert alert = new Alert(AlertType.WARNING);
+						alert.setHeaderText("Digite um valor inteiro válido!");
+						alert.setContentText("Busca não efetuada!");
+						alert.setTitle("Valores inválidos");
+						alert.show();
+					}
+				}
+			} else if (choiceFilter.getValue().equals("NOME")) {
+				if (txtFilter.getText().equals("")) {
+					alimentarTable();
+				} else {
+					tblClientes.setItems(cadastroCliente.capturarClienteNome(txtFilter.getText()));
+				}
+			} else if (choiceFilter.getValue().equals("SOBRENOME")) {
+				if (txtFilter.getText().equals("")) {
+					alimentarTable();
+				} else {
+					tblClientes.setItems(cadastroCliente.capturarClienteSobrenome(txtFilter.getText()));
+				}
+			} else if (choiceFilter.getValue().equals("CNPJ/CPF")) {
+				if (txtFilter.getText().equals("")) {
+					alimentarTable();
+				} else {
+					tblClientes.setItems(cadastroCliente.capturarClienteCnpjCpf(txtFilter.getText()));
+				}
+			} else if (choiceFilter.getValue().equals("EMAIL")) {
+				if (txtFilter.getText().equals("")) {
+					alimentarTable();
+				} else {
+					tblClientes.setItems(cadastroCliente.capturarClienteEmail(txtFilter.getText()));
+				}
+			} else if (choiceFilter.getValue().equals("TELEFONE")) {
+				if (txtFilter.getText().equals("")) {
+					alimentarTable();
+				} else {
+					tblClientes.setItems(cadastroCliente.capturarClienteTelefone(txtFilter.getText()));
+				}
+			} else if (choiceFilter.getValue().equals("DATA")) {
+				if (txtFilter.getText().equals("")) {
+					alimentarTable();
+				} else {
+					tblClientes.setItems(cadastroCliente.capturarClienteData(txtFilter.getText()));
+				}
+
+			}
 		}
 	}
-	
-    @FXML
-    void textFieldCnpjCpfRelease() {
-    	TextFieldFormatter tff = new TextFieldFormatter();
-    	if(tipoPessoa.getValue().equals("Física")) {
-        	tff.setMask("###.###.###-##");
-        	tff.setCaracteresValidos("0123456789");
-        	tff.setTf(txtCnpjCpf);
-        	tff.formatter();
-    	}else {
-        	tff.setMask("##.###.###/####-##");
-        	tff.setCaracteresValidos("0123456789");
-        	tff.setTf(txtCnpjCpf);
-        	tff.formatter();
-    	}
-    }
-    
 
-    @FXML
-    void verificarBotoes(ActionEvent event) {
-    	BooleanBinding algoSelecionado = tblClientes.getSelectionModel().selectedItemProperty().isNull();
+	@FXML
+	void textFieldCnpjCpfRelease() {
+		TextFieldFormatter tff = new TextFieldFormatter();
+		if (tipoPessoa.getValue().equals("Física")) {
+			tff.setMask("###.###.###-##");
+			tff.setCaracteresValidos("0123456789");
+			tff.setTf(txtCnpjCpf);
+			tff.formatter();
+		} else {
+			tff.setMask("##.###.###/####-##");
+			tff.setCaracteresValidos("0123456789");
+			tff.setTf(txtCnpjCpf);
+			tff.formatter();
+		}
+	}
+
+	@FXML
+	void verificarBotoes(ActionEvent event) {
+		BooleanBinding algoSelecionado = tblClientes.getSelectionModel().selectedItemProperty().isNull();
 
 		btnEditar.disableProperty().bind(algoSelecionado);
 		btnExcluir.disableProperty().bind(algoSelecionado);
-    }
+	}
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -347,8 +416,9 @@ public class FrmCadastroClienteController implements Initializable {
 
 		cadastroCliente = new FrmCadastroClienteDAO();
 
-		choiceFilter.setItems(FXCollections.observableArrayList("ID", "NOME", "SOBRENOME", "CNPJ", "EMAIL"));
-		
+		choiceFilter.setItems(
+				FXCollections.observableArrayList("ID", "NOME", "SOBRENOME", "CNPJ/CPF", "EMAIL", "TELEFONE", "DATA"));
+
 		tipoPessoa.setItems(FXCollections.observableArrayList("Física", "Jurídica"));
 
 		tblColumnId.setCellValueFactory(new PropertyValueFactory<Integer, Clientes>("codigo"));

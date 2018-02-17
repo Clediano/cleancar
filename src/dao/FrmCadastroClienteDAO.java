@@ -143,7 +143,7 @@ public class FrmCadastroClienteDAO {
 	 * Retorna um ObservableList contendo todos os clientes do banco de dados.
 	 * 
 	 * @param String
-	 *            contendo o possivel usuário(login);
+	 *            contendo o possivel cliente(nome);
 	 * @return ObservableList
 	 */
 	public ObservableList<Clientes> capturarClienteNome(String nomeCliente) {
@@ -167,7 +167,9 @@ public class FrmCadastroClienteDAO {
 				cliente.setSobrenome(rs.getString(3));
 				cliente.setCnpj(rs.getString(4));
 				cliente.setEmail(rs.getString(5));
-				cliente.setDataCadastro(rs.getDate(6));
+				cliente.setTelefone(rs.getString(6));
+				cliente.setPessoa(rs.getString(7));
+				cliente.setDataCadastro(rs.getDate(8));
 
 				lista.add(cliente);
 			}
@@ -177,35 +179,169 @@ public class FrmCadastroClienteDAO {
 		}
 		return lista;
 	}
-
-	/**
-	 * Retorna um ObservableList contendo todos os usuários do banco de dados.
-	 * 
-	 * @param Integer
-	 *            contendo o possivel código do cliente;
-	 * @return ObservableList
-	 */
-	public ObservableList<Usuarios> capturarUsuariosCodigo(Integer codigo) {
+	
+	public ObservableList<Clientes> capturarClienteSobrenome(String sobrenomeCliente) {
 		Connection conn = new ConnectionFactory().getConnection();
 		PreparedStatement ps;
 		ResultSet rs;
-		Usuarios usuario;
-		ObservableList<Usuarios> lista = FXCollections.observableArrayList();
+		Clientes cliente;
+		ObservableList<Clientes> lista = FXCollections.observableArrayList();
 
 		try {
-			ps = conn.prepareStatement("select * from usuarios where idusuarios = ?;");
-			ps.setInt(1, codigo);
+			ps = conn.prepareStatement("select * from clientes where cli_sobrenome like ?;");
+			ps.setString(1, '%' + sobrenomeCliente + '%');
 
 			rs = ps.executeQuery();
 
 			while (rs.next()) {
-				usuario = new Usuarios();
+				cliente = new Clientes();
 
-				usuario.setCodigo(rs.getInt(1));
-				usuario.setUsuario(rs.getString(2));
-				usuario.setSenha(rs.getString(3));
+				cliente.setCodigo(rs.getInt(1));
+				cliente.setNome(rs.getString(2));
+				cliente.setSobrenome(rs.getString(3));
+				cliente.setCnpj(rs.getString(4));
+				cliente.setEmail(rs.getString(5));
+				cliente.setTelefone(rs.getString(6));
+				cliente.setPessoa(rs.getString(7));
+				cliente.setDataCadastro(rs.getDate(8));
 
-				lista.add(usuario);
+				lista.add(cliente);
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return lista;
+	}
+	
+	public ObservableList<Clientes> capturarClienteEmail(String email) {
+		Connection conn = new ConnectionFactory().getConnection();
+		PreparedStatement ps;
+		ResultSet rs;
+		Clientes cliente;
+		ObservableList<Clientes> lista = FXCollections.observableArrayList();
+
+		try {
+			ps = conn.prepareStatement("select * from clientes where cli_email like ?;");
+			ps.setString(1, '%' + email + '%');
+
+			rs = ps.executeQuery();
+
+			while (rs.next()) {
+				cliente = new Clientes();
+
+				cliente.setCodigo(rs.getInt(1));
+				cliente.setNome(rs.getString(2));
+				cliente.setSobrenome(rs.getString(3));
+				cliente.setCnpj(rs.getString(4));
+				cliente.setEmail(rs.getString(5));
+				cliente.setTelefone(rs.getString(6));
+				cliente.setPessoa(rs.getString(7));
+				cliente.setDataCadastro(rs.getDate(8));
+
+				lista.add(cliente);
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return lista;
+	}
+	
+	public ObservableList<Clientes> capturarClienteTelefone(String telefone) {
+		Connection conn = new ConnectionFactory().getConnection();
+		PreparedStatement ps;
+		ResultSet rs;
+		Clientes cliente;
+		ObservableList<Clientes> lista = FXCollections.observableArrayList();
+
+		try {
+			ps = conn.prepareStatement("select * from clientes where cli_email like ?;");
+			ps.setString(1, '%' + telefone + '%');
+
+			rs = ps.executeQuery();
+
+			while (rs.next()) {
+				cliente = new Clientes();
+
+				cliente.setCodigo(rs.getInt(1));
+				cliente.setNome(rs.getString(2));
+				cliente.setSobrenome(rs.getString(3));
+				cliente.setCnpj(rs.getString(4));
+				cliente.setEmail(rs.getString(5));
+				cliente.setTelefone(rs.getString(6));
+				cliente.setPessoa(rs.getString(7));
+				cliente.setDataCadastro(rs.getDate(8));
+
+				lista.add(cliente);
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return lista;
+	}
+	
+	public ObservableList<Clientes> capturarClienteData(String data) {
+		Connection conn = new ConnectionFactory().getConnection();
+		PreparedStatement ps;
+		ResultSet rs;
+		Clientes cliente;
+		ObservableList<Clientes> lista = FXCollections.observableArrayList();
+
+		try {
+			ps = conn.prepareStatement("select * from clientes where cli_data_cadastro = ?;");
+			ps.setString(1, data);
+
+			rs = ps.executeQuery();
+
+			while (rs.next()) {
+				cliente = new Clientes();
+
+				cliente.setCodigo(rs.getInt(1));
+				cliente.setNome(rs.getString(2));
+				cliente.setSobrenome(rs.getString(3));
+				cliente.setCnpj(rs.getString(4));
+				cliente.setEmail(rs.getString(5));
+				cliente.setTelefone(rs.getString(6));
+				cliente.setPessoa(rs.getString(7));
+				cliente.setDataCadastro(rs.getDate(8));
+
+				lista.add(cliente);
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return lista;
+	}
+	
+	public ObservableList<Clientes> capturarClienteCnpjCpf(String cnpjCpf) {
+		Connection conn = new ConnectionFactory().getConnection();
+		PreparedStatement ps;
+		ResultSet rs;
+		Clientes cliente;
+		ObservableList<Clientes> lista = FXCollections.observableArrayList();
+
+		try {
+			ps = conn.prepareStatement("select * from clientes where cli_cnpj like ?;");
+			ps.setString(1, '%' + cnpjCpf + '%');
+
+			rs = ps.executeQuery();
+
+			while (rs.next()) {
+				cliente = new Clientes();
+
+				cliente.setCodigo(rs.getInt(1));
+				cliente.setNome(rs.getString(2));
+				cliente.setSobrenome(rs.getString(3));
+				cliente.setCnpj(rs.getString(4));
+				cliente.setEmail(rs.getString(5));
+				cliente.setTelefone(rs.getString(6));
+				cliente.setPessoa(rs.getString(7));
+				cliente.setDataCadastro(rs.getDate(8));
+
+				lista.add(cliente);
 			}
 
 		} catch (SQLException e) {
@@ -251,7 +387,7 @@ public class FrmCadastroClienteDAO {
 		PreparedStatement ps;
 
 		try {
-			ps = conn.prepareStatement("UPDATE usuarios SET "
+			ps = conn.prepareStatement("UPDATE clientes SET "
 					+ "cli_nome = ?, "
 					+ "cli_sobrenome = ?, "
 					+ "cli_cnpj = ?, "
@@ -277,5 +413,39 @@ public class FrmCadastroClienteDAO {
 			e.printStackTrace();
 		}
 		return false;
+	}
+	
+	public ObservableList<Clientes> capturarClientesId(Integer id) {
+		Connection conn = new ConnectionFactory().getConnection();
+		PreparedStatement ps;
+		ResultSet rs;
+		Clientes cliente;
+		ObservableList<Clientes> lista = FXCollections.observableArrayList();
+
+		try {
+			ps = conn.prepareStatement("select * from clientes where id_cliente = ?;");
+			ps.setInt(1, id);
+
+			rs = ps.executeQuery();
+
+			while (rs.next()) {
+				cliente = new Clientes();
+
+				cliente.setCodigo(rs.getInt(1));
+				cliente.setNome(rs.getString(2));
+				cliente.setSobrenome(rs.getString(3));
+				cliente.setCnpj(rs.getString(4));
+				cliente.setEmail(rs.getString(5));
+				cliente.setTelefone(rs.getString(6));
+				cliente.setPessoa(rs.getString(7));
+				cliente.setDataCadastro(rs.getDate(8));
+
+				lista.add(cliente);
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return lista;
 	}
 }

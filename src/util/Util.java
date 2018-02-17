@@ -15,33 +15,31 @@ import javafx.scene.control.TextField;
 
 public class Util {
 
-
 	public static Integer formatTelefone(TextField telefone) {
 		String fone = telefone.getText();
-		
+
 		fone = fone.replace("(", "");
 		fone = fone.replace(")", "");
 		fone = fone.replace("-", "");
 
 		System.out.println(fone);
-		
+
 		return Integer.parseInt(fone);
 	}
-	
+
 	public static Integer formatCpfCnpj(TextField CpfCnpj) {
 		String cod = CpfCnpj.getText();
-		
+
 		cod = cod.replace(".", "");
 		cod = cod.replace(".", "");
 		cod = cod.replace("/", "");
 		cod = cod.replace("-", "");
-		
+
 		System.out.println(cod);
-		
+
 		return Integer.parseInt(cod);
 	}
-	
-	
+
 	/**
 	 * Recebe um LocaDate e retorna um Date
 	 * 
@@ -51,7 +49,7 @@ public class Util {
 	public static Date asDate(LocalDate localDate) {
 		return java.sql.Date.valueOf(localDate);
 	}
-	
+
 	/**
 	 * Recebe um Date e retorna um LocalDate
 	 * 
@@ -59,6 +57,7 @@ public class Util {
 	 * @return
 	 */
 	public static LocalDate asLocalDate(Date date) {
+
 		return LocalDate.parse(date.toString());
 	}
 
@@ -161,6 +160,7 @@ public class Util {
 			}
 		});
 	}
+
 	/**
 	 * Mostra uma mensagem de confirmação para a exclusao de algum ítem.
 	 */
@@ -170,7 +170,7 @@ public class Util {
 		alerta.setHeaderText("Tem certeza que deseja excluir?");
 		alerta.setContentText("O processo a seguir é irreversível.");
 		alerta.showAndWait();
-		
+
 		return alerta.getResult();
 	}
 }
