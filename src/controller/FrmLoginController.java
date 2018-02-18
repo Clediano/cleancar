@@ -107,7 +107,7 @@ public class FrmLoginController {
 
 					stagePrincipal.setScene(scene);
 					stagePrincipal.setTitle("Página Principal");
-					stagePrincipal.getIcons().add(new Image("img/iconFrmLogin.png"));
+					stagePrincipal.getIcons().add(new Image("img/iconFrmPrincipal.png"));
 					stagePrincipal.show();
 
 					Main.primaryStage.close();

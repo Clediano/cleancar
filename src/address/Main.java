@@ -19,7 +19,6 @@ public class Main extends Application {
 
 		this.primaryStage = primaryStage;
 		primaryStage.getIcons().add(new Image("file:resource/img/iconFrmPrincipal.png"));
-
 		initialize();
 	}
 
