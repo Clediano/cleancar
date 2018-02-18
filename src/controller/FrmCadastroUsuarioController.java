@@ -120,7 +120,7 @@ public class FrmCadastroUsuarioController implements Initializable {
 						Alert alert = new Alert(AlertType.WARNING);
 						alert.setHeaderText("Digite um valor inteiro válido!");
 						alert.setContentText("Busca não efetuada!");
-						alert.setTitle("Valores inválidos");
+						alert.setTitle("Valores inválidos.");
 						alert.show();
 					}
 				}
