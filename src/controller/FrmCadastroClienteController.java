@@ -186,7 +186,7 @@ public class FrmCadastroClienteController implements Initializable {
 
 	@FXML
 	void handleCancelarCadastro(ActionEvent event) {
-		FrmContainerController.parentFrmCadastro.setVisible(false);
+		FrmContainerController.parentFrmCadastroClientes.setVisible(false);
 	}
 
 	@FXML
@@ -324,7 +324,7 @@ public class FrmCadastroClienteController implements Initializable {
 
 	@FXML
 	void handleFechar(ActionEvent event) {
-		FrmContainerController.parentFrmCadastro.setVisible(false);
+		FrmContainerController.parentFrmCadastroClientes.setVisible(false);
 	}
 
 	@FXML

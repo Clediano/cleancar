@@ -183,19 +183,19 @@ public class FrmCadastroUsuarioController implements Initializable {
 	void handleCancelar(ActionEvent event) {
 		SingleSelectionModel<Tab> selectionModel = tabPane.getSelectionModel();
 		if (selectionModel.isEmpty()) {
-			FrmContainerController.parentFrmCadastro.setVisible(false);
+			FrmContainerController.parentFrmCadastroClientes.setVisible(false);
 		} else if (selectionModel.getSelectedItem().equals(hBoxCadastro)) {
 			selectionModel.select(hBoxConsulta);
 
 			limparTelaCadastro();
 		} else {
-			FrmContainerController.parentFrmCadastro.setVisible(false);
+			FrmContainerController.parentFrmCadastroClientes.setVisible(false);
 		}
 	}
 
 	@FXML
 	void handleFechar(ActionEvent event) {
-		FrmContainerController.parentFrmCadastro.setVisible(false);
+		FrmContainerController.parentFrmCadastroClientes.setVisible(false);
 	}
 
 	@FXML

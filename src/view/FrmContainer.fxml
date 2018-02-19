@@ -5,30 +5,41 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane prefHeight="400.0" prefWidth="600.0" stylesheets="@../css/FrmContainer.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.FrmContainerController">
-   <top>
-      <MenuBar BorderPane.alignment="CENTER">
-        <menus>
-          <Menu mnemonicParsing="false" text="Cadastros">
-            <items>
-              <MenuItem fx:id="mnClientes" mnemonicParsing="false" onAction="#handleCadastroClientes" text="Clientes" />
-            </items>
-          </Menu>
-          <Menu mnemonicParsing="false" text="Lançamentos">
-            <items>
-              <MenuItem fx:id="btnLavagens" mnemonicParsing="false" onAction="#handleLavagens" text="Lavagens" />
-            </items>
-          </Menu>
-          <Menu mnemonicParsing="false" text="Configurações">
-            <items>
-              <MenuItem fx:id="btnUsuarios" mnemonicParsing="false" onAction="#handleUsuarios" text="Usuários" />
-                  <MenuItem fx:id="btnBanco" mnemonicParsing="false" onAction="#handleBanco" text="Banco de dados" />
-            </items>
-          </Menu>
-        </menus>
-      </MenuBar>
-   </top>
-   <center>
-      <AnchorPane fx:id="anchoPane" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
-   </center>
+<BorderPane prefHeight="400.0" prefWidth="600.0"
+	stylesheets="@../css/FrmContainer.css" xmlns="http://javafx.com/javafx/8"
+	xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.FrmContainerController">
+	<top>
+		<MenuBar BorderPane.alignment="CENTER">
+			<menus>
+				<Menu mnemonicParsing="false" text="Cadastros">
+					<items>
+						<MenuItem fx:id="mnClientes" mnemonicParsing="false"
+							onAction="#handleCadastroClientes" text="Clientes" />
+					</items>
+					<items>
+						<MenuItem fx:id="mnProdutos" mnemonicParsing="false"
+							onAction="#handleCadastroProdutos" text="Produtos" />
+					</items>
+				</Menu>
+				<Menu mnemonicParsing="false" text="Lançamentos">
+					<items>
+						<MenuItem fx:id="btnLavagens" mnemonicParsing="false"
+							onAction="#handleLavagens" text="Lavagens" />
+					</items>
+				</Menu>
+				<Menu mnemonicParsing="false" text="Configurações">
+					<items>
+						<MenuItem fx:id="btnUsuarios" mnemonicParsing="false"
+							onAction="#handleUsuarios" text="Usuários" />
+						<MenuItem fx:id="btnBanco" mnemonicParsing="false"
+							onAction="#handleBanco" text="Banco de dados" />
+					</items>
+				</Menu>
+			</menus>
+		</MenuBar>
+	</top>
+	<center>
+		<AnchorPane fx:id="anchoPane" prefHeight="200.0" prefWidth="200.0"
+			BorderPane.alignment="CENTER" />
+	</center>
 </BorderPane>

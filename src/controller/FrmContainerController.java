@@ -15,8 +15,10 @@ import javafx.stage.StageStyle;
 public class FrmContainerController {
 
 	public static Parent parentFrmLancamentosLavagens;
+	
+	public static Parent parentFrmCadastroProdutos;
 
-	public static Parent parentFrmCadastro;
+	public static Parent parentFrmCadastroClientes;
 	
 	public static Parent parentFrmCaminhoBanco;
 
@@ -66,15 +68,15 @@ public class FrmContainerController {
 		desativarPainel();
 
 		try {
-			parentFrmCadastro = FXMLLoader.load(getClass().getClassLoader().getResource("view/FrmCadastroUsuario.fxml"));
+			parentFrmCadastroClientes = FXMLLoader.load(getClass().getClassLoader().getResource("view/FrmCadastroUsuario.fxml"));
 
-			anchoPane.setTopAnchor(parentFrmCadastro, 0.0);
-			anchoPane.setBottomAnchor(parentFrmCadastro, 0.0);
+			anchoPane.setTopAnchor(parentFrmCadastroClientes, 0.0);
+			anchoPane.setBottomAnchor(parentFrmCadastroClientes, 0.0);
 			
-			anchoPane.setLeftAnchor(parentFrmCadastro, 0.0);
-			anchoPane.setRightAnchor(parentFrmCadastro, 0.0);
+			anchoPane.setLeftAnchor(parentFrmCadastroClientes, 0.0);
+			anchoPane.setRightAnchor(parentFrmCadastroClientes, 0.0);
 			
-			anchoPane.getChildren().add(parentFrmCadastro);
+			anchoPane.getChildren().add(parentFrmCadastroClientes);
 
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -90,15 +92,37 @@ public class FrmContainerController {
     	desativarPainel();
     	
     	try {
-			parentFrmCadastro = FXMLLoader.load(getClass().getClassLoader().getResource("view/FrmCadastroCliente.fxml"));
+			parentFrmCadastroClientes = FXMLLoader.load(getClass().getClassLoader().getResource("view/FrmCadastroCliente.fxml"));
 
-			anchoPane.setTopAnchor(parentFrmCadastro, 0.0);
-			anchoPane.setBottomAnchor(parentFrmCadastro, 0.0);
+			anchoPane.setTopAnchor(parentFrmCadastroClientes, 0.0);
+			anchoPane.setBottomAnchor(parentFrmCadastroClientes, 0.0);
 			
-			anchoPane.setLeftAnchor(parentFrmCadastro, 0.0);
-			anchoPane.setRightAnchor(parentFrmCadastro, 0.0);
+			anchoPane.setLeftAnchor(parentFrmCadastroClientes, 0.0);
+			anchoPane.setRightAnchor(parentFrmCadastroClientes, 0.0);
 			
-			anchoPane.getChildren().add(parentFrmCadastro);
+			anchoPane.getChildren().add(parentFrmCadastroClientes);
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+    }
+    
+    @SuppressWarnings("static-access")
+	@FXML
+    void handleCadastroProdutos(ActionEvent event) {
+    	
+    	desativarPainel();
+    	
+    	try {
+			parentFrmCadastroProdutos = FXMLLoader.load(getClass().getClassLoader().getResource("view/FrmCadastroProdutos.fxml"));
+
+			anchoPane.setTopAnchor(parentFrmCadastroProdutos, 0.0);
+			anchoPane.setBottomAnchor(parentFrmCadastroProdutos, 0.0);
+			
+			anchoPane.setLeftAnchor(parentFrmCadastroProdutos, 0.0);
+			anchoPane.setRightAnchor(parentFrmCadastroProdutos, 0.0);
+			
+			anchoPane.getChildren().add(parentFrmCadastroProdutos);
 
 		} catch (IOException e) {
 			e.printStackTrace();
