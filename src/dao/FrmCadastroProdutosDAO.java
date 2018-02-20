@@ -36,7 +36,6 @@ public class FrmCadastroProdutosDAO {
 
 				lista.add(produto);
 			}
-
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -190,13 +189,61 @@ public class FrmCadastroProdutosDAO {
 		PreparedStatement ps;
 		
 		try {
-			ps = conn.prepareStatement("delete from produtos where id)produto = ?");	
+			ps = conn.prepareStatement("delete from produtos where id_produto = ?");	
 			ps.setInt(1, produto.getCodigo());
 					
 			if(ps.executeUpdate() != 0){
 				return true;
 			}			
 		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+	
+	public boolean editarProduto(Produtos produto) {
+		Connection conn = new ConnectionFactory().getConnection();
+		PreparedStatement ps;
+		
+		try {
+			ps = conn.prepareStatement("UPDATE produtos SET "
+					+ "pro_nome = ?,"
+					+ "pro_preco_venda = ?,"
+					+ "pro_conversao = ?,"
+					+ "pro_data_cadastro = ? WHERE id_produto = ?;");
+
+			ps.setString(1, produto.getNome());
+			ps.setFloat(2, produto.getPrecoVenda());
+			ps.setFloat(3, produto.getConversao());
+			ps.setDate(4, produto.getDataCadastro());
+			ps.setInt(5, produto.getCodigo());
+			
+			if(ps.executeUpdate() != 0) {
+				return true;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+	
+	public boolean consultarExistenciaProduto(Integer codigo) {
+		Connection conn = new ConnectionFactory().getConnection();
+		PreparedStatement ps;
+		ResultSet rs;
+		
+		try {
+			ps = conn.prepareStatement("select * from produtos where id_produto = ?");
+			
+			ps.setInt(1, codigo);
+			
+			rs = ps.executeQuery();
+			
+			if(rs.next()) {
+				return true;
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return false;

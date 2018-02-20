@@ -97,13 +97,25 @@ public class Util {
 	/**
 	 * Retorna monetário formatado para o banco MySQL
 	 */
-	public static Double formatDouble(String valor) {
-		String num = "";
+	public static Double formatDouble(TextField txtField) {
+		String num = txtField.getText();
 		if (num != null) {
-			num = valor.replace(".", "");
+			num = num.replace(".", "");
 			num = num.replaceAll(",", ".");
 		}
 		return Double.parseDouble(num);
+	}
+	
+	/**
+	 * Retorna monetário formatado para o banco MySQL
+	 */
+	public static Float formatFloat(TextField txtField) {
+		String num = txtField.getText();
+		if (num != null) {
+			num = num.replace(".", "");
+			num = num.replaceAll(",", ".");
+		}
+		return Float.parseFloat(num);
 	}
 
 	/**
@@ -124,22 +136,6 @@ public class Util {
 							textArea.setText(oldValue);
 					}
 				});
-			}
-		});
-	}
-
-	/**
-	 * @param textField
-	 *            TextField.
-	 * @param length
-	 *            Tamanho do campo.
-	 */
-	private static void maxField(final TextField textField, final Integer length) {
-		textField.textProperty().addListener(new ChangeListener<String>() {
-			@Override
-			public void changed(ObservableValue<? extends String> observableValue, String oldValue, String newValue) {
-				if (newValue.length() > length)
-					textField.setText(oldValue);
 			}
 		});
 	}

@@ -11,6 +11,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ChoiceBox;
@@ -22,10 +23,10 @@ import javafx.scene.control.TabPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import model.Produtos;
 import util.Util;
@@ -36,6 +37,9 @@ public class FrmCadastroProdutosController implements Initializable {
 
 	@FXML
 	private TableColumn<Produtos, Integer> tblColumnId;
+
+	@FXML
+	private TableColumn<Produtos, Float> tblColumnConversao;
 
 	@FXML
 	private TableColumn<Produtos, Date> tblColumnData;
@@ -105,59 +109,126 @@ public class FrmCadastroProdutosController implements Initializable {
 
 	@FXML
 	void verificarBotoes(ActionEvent event) {
-		
+
 	}
 
 	@FXML
 	void onKeyDelPressed(ActionEvent event) {
-		
+
 	}
 
 	@FXML
 	void handleGravar(ActionEvent event) {
+		Produtos produto = new Produtos();
+
+		produto.setCodigo(Integer.parseInt(lblCodigo.getText()));
+		produto.setNome(txtNome.getText());
+		produto.setDataCadastro(Util.asDate(txtDate.getValue()));
+		produto.setPrecoVenda(Util.formatFloat(txtPreco));
+		produto.setConversao(Util.formatFloat(txtConversao));
+		
+		if(cadastroProdutos.consultarExistenciaProduto(Integer.parseInt(lblCodigo.getText()))) {
+			cadastroProdutos.editarProduto(produto);
+			alimentarTable();
+			selecioanrTelaConsulta();
+		}else {
+			if (!cadastroProdutos.adicionarProduto(produto)) {
+				Alert alert = new Alert(AlertType.WARNING);
+				alert.setHeaderText("Produto não cadastrado");
+				alert.setContentText("Verifique sua conexão com o banco de dados!");
+				alert.setTitle("Falha no cadastro.");
+				alert.show();
+			}
+			alimentarTable();
+			selecioanrTelaConsulta();
+		}
 		
 	}
 
 	@FXML
 	void handleCancelarCadastro(ActionEvent event) {
+		selecioanrTelaConsulta();
+		limparCamposCadastro();
+		desabilitaCamposCadastro();
+	}
+
+	private void selecioanrTelaCadastro() {
 		SingleSelectionModel<Tab> selectionModel = tabPane.getSelectionModel();
-		selectionModel.select(hBoxConsulta);	
-		limparCamposCadastro();	
+		selectionModel.select(hBoxCadastro);
+	}
+
+	private void selecioanrTelaConsulta() {
+		SingleSelectionModel<Tab> selectionModel = tabPane.getSelectionModel();
+		selectionModel.select(hBoxConsulta);
 	}
 
 	@FXML
 	void handleIncluir(ActionEvent event) {
-		SingleSelectionModel<Tab> selectionModel = tabPane.getSelectionModel();
-		selectionModel.select(hBoxCadastro);
-		
+		selecioanrTelaCadastro();
+		habilitaCamposCadastro();
+
 		txtDate.setValue(LocalDate.now());
 		lblCodigo.setText(cadastroProdutos.capturarProximoCodigo().toString());
+		txtNome.requestFocus();
 	}
 
 	@FXML
 	void handleExcluir(ActionEvent event) {
 		Produtos produto = tblProdutos.getSelectionModel().getSelectedItem();
-		if(tblProdutos.getSelectionModel().getSelectedItem() != null) {
-			if(Util.alertaExclusao() == ButtonType.OK) {
+		if (tblProdutos.getSelectionModel().getSelectedItem() != null) {
+			if (Util.alertaExclusao() == ButtonType.OK) {
 				cadastroProdutos.excluirProduto(produto);
+				alimentarTable();
+				selecioanrTelaConsulta();
 			}
+		}
+	}
+
+	@FXML
+	void handleDoubleClick(MouseEvent event) {
+		Produtos produto = tblProdutos.getSelectionModel().getSelectedItem();
+		if (event.getClickCount() == 2) {
+			alimentarCamposCadastro(produto);
+			selecioanrTelaCadastro();
+			desabilitaCamposCadastro();
 		}
 	}
 
 	@FXML
 	void handleEditar(ActionEvent event) {
 		Produtos produto = tblProdutos.getSelectionModel().getSelectedItem();
-		if(produto != null) {
+		if (produto != null) {
 			alimentarCamposCadastro(produto);
+			habilitaCamposCadastro();
+			selecioanrTelaCadastro();
+		}else {
+			habilitaCamposCadastro();
 		}
+	}
+	
+	private void habilitaCamposCadastro() {
+		lblCodigo.setDisable(false);
+		txtNome.setDisable(false);
+		txtPreco.setDisable(false);
+		txtConversao.setDisable(false);
+		txtDate.setDisable(false);
+		btnGravar.setDisable(false);
+	}
+	
+	private void desabilitaCamposCadastro() {
+		lblCodigo.setDisable(true);
+		txtNome.setDisable(true);
+		txtPreco.setDisable(true);
+		txtConversao.setDisable(true);
+		txtDate.setDisable(true);
+		btnGravar.setDisable(true);
 	}
 
 	@FXML
 	void handleCancelar(ActionEvent event) {
-		SingleSelectionModel<Tab> selectionModel = tabPane.getSelectionModel();
-		selectionModel.select(hBoxConsulta);
-		
 		limparCamposCadastro();
+		desabilitaCamposCadastro();
+		selecioanrTelaConsulta();
 	}
 
 	@FXML
@@ -208,7 +279,7 @@ public class FrmCadastroProdutosController implements Initializable {
 	private void alimentarTable() {
 		tblProdutos.setItems(cadastroProdutos.capturarTodosProdutos());
 	}
-	
+
 	private void limparCamposCadastro() {
 		txtDate.setValue(LocalDate.now());
 		lblCodigo.setText(cadastroProdutos.capturarProximoCodigo().toString());
@@ -216,12 +287,16 @@ public class FrmCadastroProdutosController implements Initializable {
 		txtPreco.setText("");
 		txtConversao.setText("");
 	}
-	
+
+	private void formatarCampoMonetario() {
+		Util.monetaryField(txtPreco);
+		Util.monetaryField(txtConversao);
+	}
+
 	private void alimentarCamposCadastro(Produtos produto) {
-		
-		lblCodigo.setText(cadastroProdutos.capturarProximoCodigo().toString());
-		txtNome.setText(produto.getCodigo().toString());
-		txtDate.setValue(LocalDate.now());
+		lblCodigo.setText(produto.getCodigo().toString());
+		txtNome.setText(produto.getNome().toString());
+		txtDate.setValue(Util.asLocalDate(produto.getDataCadastro()));
 		txtPreco.setText(produto.getPrecoVenda().toString());
 		txtConversao.setText(produto.getConversao().toString());
 	}
@@ -233,9 +308,12 @@ public class FrmCadastroProdutosController implements Initializable {
 
 		tblColumnId.setCellValueFactory(new PropertyValueFactory<Produtos, Integer>("codigo"));
 		tblColumnNome.setCellValueFactory(new PropertyValueFactory<Produtos, String>("nome"));
-		tblColumnPreco.setCellValueFactory(new PropertyValueFactory<Produtos, Float>("preco"));
-		tblColumnData.setCellValueFactory(new PropertyValueFactory<Produtos, Date>("data"));
+		tblColumnPreco.setCellValueFactory(new PropertyValueFactory<Produtos, Float>("precoVenda"));
+		tblColumnData.setCellValueFactory(new PropertyValueFactory<Produtos, Date>("dataCadastro"));
+		tblColumnConversao.setCellValueFactory(new PropertyValueFactory<Produtos, Float>("conversao"));
 
 		alimentarTable();
+		formatarCampoMonetario();
+		desabilitaCamposCadastro();
 	}
 }
