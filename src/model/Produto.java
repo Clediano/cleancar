@@ -2,7 +2,7 @@ package model;
 
 import java.sql.Date;
 
-public class Produtos {
+public class Produto {
 
 	private Integer codigo;
 	private String nome;
@@ -10,7 +10,7 @@ public class Produtos {
 	private Float conversao;
 	private Date dataCadastro;
 
-	public Produtos(Integer codigo, String proNome, Float precoVenda, Float conversao, Date dataCadastro) {
+	public Produto(Integer codigo, String proNome, Float precoVenda, Float conversao, Date dataCadastro) {
 		super();
 		this.codigo = codigo;
 		this.nome = proNome;
@@ -19,7 +19,7 @@ public class Produtos {
 		this.dataCadastro = dataCadastro;
 	}
 
-	public Produtos() {
+	public Produto() {
 	}
 
 	public Integer getCodigo() {

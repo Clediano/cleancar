@@ -28,7 +28,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
-import model.Produtos;
+import model.Produto;
 import util.Util;
 
 public class FrmCadastroProdutosController implements Initializable {
@@ -36,13 +36,13 @@ public class FrmCadastroProdutosController implements Initializable {
 	private FrmCadastroProdutosDAO cadastroProdutos = new FrmCadastroProdutosDAO();
 
 	@FXML
-	private TableColumn<Produtos, Integer> tblColumnId;
+	private TableColumn<Produto, Integer> tblColumnId;
 
 	@FXML
-	private TableColumn<Produtos, Float> tblColumnConversao;
+	private TableColumn<Produto, Float> tblColumnConversao;
 
 	@FXML
-	private TableColumn<Produtos, Date> tblColumnData;
+	private TableColumn<Produto, Date> tblColumnData;
 
 	@FXML
 	private TextField txtConversao;
@@ -54,7 +54,7 @@ public class FrmCadastroProdutosController implements Initializable {
 	private ChoiceBox<String> choiceFilter;
 
 	@FXML
-	private TableColumn<Produtos, String> tblColumnNome;
+	private TableColumn<Produto, String> tblColumnNome;
 
 	@FXML
 	private TextField txtFilter;
@@ -81,7 +81,7 @@ public class FrmCadastroProdutosController implements Initializable {
 	private Button btnCancelarCadastro;
 
 	@FXML
-	private TableColumn<Produtos, Float> tblColumnPreco;
+	private TableColumn<Produto, Float> tblColumnPreco;
 
 	@FXML
 	private Tab hBoxCadastro;
@@ -93,7 +93,7 @@ public class FrmCadastroProdutosController implements Initializable {
 	private Button btnCancelar;
 
 	@FXML
-	private TableView<Produtos> tblProdutos;
+	private TableView<Produto> tblProdutos;
 
 	@FXML
 	private Button btnExcluir;
@@ -119,7 +119,7 @@ public class FrmCadastroProdutosController implements Initializable {
 
 	@FXML
 	void handleGravar(ActionEvent event) {
-		Produtos produto = new Produtos();
+		Produto produto = new Produto();
 
 		produto.setCodigo(Integer.parseInt(lblCodigo.getText()));
 		produto.setNome(txtNome.getText());
@@ -130,6 +130,7 @@ public class FrmCadastroProdutosController implements Initializable {
 		if(cadastroProdutos.consultarExistenciaProduto(Integer.parseInt(lblCodigo.getText()))) {
 			cadastroProdutos.editarProduto(produto);
 			alimentarTable();
+			limparCamposCadastro();
 			selecioanrTelaConsulta();
 		}else {
 			if (!cadastroProdutos.adicionarProduto(produto)) {
@@ -140,6 +141,7 @@ public class FrmCadastroProdutosController implements Initializable {
 				alert.show();
 			}
 			alimentarTable();
+			limparCamposCadastro();
 			selecioanrTelaConsulta();
 		}
 		
@@ -174,7 +176,7 @@ public class FrmCadastroProdutosController implements Initializable {
 
 	@FXML
 	void handleExcluir(ActionEvent event) {
-		Produtos produto = tblProdutos.getSelectionModel().getSelectedItem();
+		Produto produto = tblProdutos.getSelectionModel().getSelectedItem();
 		if (tblProdutos.getSelectionModel().getSelectedItem() != null) {
 			if (Util.alertaExclusao() == ButtonType.OK) {
 				cadastroProdutos.excluirProduto(produto);
@@ -186,7 +188,7 @@ public class FrmCadastroProdutosController implements Initializable {
 
 	@FXML
 	void handleDoubleClick(MouseEvent event) {
-		Produtos produto = tblProdutos.getSelectionModel().getSelectedItem();
+		Produto produto = tblProdutos.getSelectionModel().getSelectedItem();
 		if (event.getClickCount() == 2) {
 			alimentarCamposCadastro(produto);
 			selecioanrTelaCadastro();
@@ -196,7 +198,7 @@ public class FrmCadastroProdutosController implements Initializable {
 
 	@FXML
 	void handleEditar(ActionEvent event) {
-		Produtos produto = tblProdutos.getSelectionModel().getSelectedItem();
+		Produto produto = tblProdutos.getSelectionModel().getSelectedItem();
 		if (produto != null) {
 			alimentarCamposCadastro(produto);
 			habilitaCamposCadastro();
@@ -293,7 +295,7 @@ public class FrmCadastroProdutosController implements Initializable {
 		Util.monetaryField(txtConversao);
 	}
 
-	private void alimentarCamposCadastro(Produtos produto) {
+	private void alimentarCamposCadastro(Produto produto) {
 		lblCodigo.setText(produto.getCodigo().toString());
 		txtNome.setText(produto.getNome().toString());
 		txtDate.setValue(Util.asLocalDate(produto.getDataCadastro()));
@@ -306,11 +308,11 @@ public class FrmCadastroProdutosController implements Initializable {
 		choiceFilter.setItems(FXCollections.observableArrayList("ID", "NOME", "PREÇO", "DATA"));
 		choiceFilter.setValue("ID");
 
-		tblColumnId.setCellValueFactory(new PropertyValueFactory<Produtos, Integer>("codigo"));
-		tblColumnNome.setCellValueFactory(new PropertyValueFactory<Produtos, String>("nome"));
-		tblColumnPreco.setCellValueFactory(new PropertyValueFactory<Produtos, Float>("precoVenda"));
-		tblColumnData.setCellValueFactory(new PropertyValueFactory<Produtos, Date>("dataCadastro"));
-		tblColumnConversao.setCellValueFactory(new PropertyValueFactory<Produtos, Float>("conversao"));
+		tblColumnId.setCellValueFactory(new PropertyValueFactory<Produto, Integer>("codigo"));
+		tblColumnNome.setCellValueFactory(new PropertyValueFactory<Produto, String>("nome"));
+		tblColumnPreco.setCellValueFactory(new PropertyValueFactory<Produto, Float>("precoVenda"));
+		tblColumnData.setCellValueFactory(new PropertyValueFactory<Produto, Date>("dataCadastro"));
+		tblColumnConversao.setCellValueFactory(new PropertyValueFactory<Produto, Float>("conversao"));
 
 		alimentarTable();
 		formatarCampoMonetario();

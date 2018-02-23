@@ -26,7 +26,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
-import model.Usuarios;
+import model.Usuario;
 
 public class FrmCadastroUsuarioController implements Initializable {
 
@@ -63,7 +63,7 @@ public class FrmCadastroUsuarioController implements Initializable {
 	private HBox hBox;
 
 	@FXML
-	private TableView<Usuarios> tblLancamentos;
+	private TableView<Usuario> tblLancamentos;
 
 	@FXML
 	private Tab hBoxCadastro;
@@ -78,13 +78,13 @@ public class FrmCadastroUsuarioController implements Initializable {
 	private TabPane tabPane;
 
 	@FXML
-	private TableColumn<Usuarios, Integer> tblColumnId;
+	private TableColumn<Usuario, Integer> tblColumnId;
 
 	@FXML
-	private TableColumn<Usuarios, String> tblColumnUsuario;
+	private TableColumn<Usuario, String> tblColumnUsuario;
 
 	@FXML
-	private TableColumn<Usuarios, String> tblColumnSenha;
+	private TableColumn<Usuario, String> tblColumnSenha;
 
 	@FXML
 	private Button btnCancelar;
@@ -168,7 +168,7 @@ public class FrmCadastroUsuarioController implements Initializable {
 		SingleSelectionModel<Tab> selectionModel = tabPane.getSelectionModel();
 		selectionModel.select(hBoxCadastro);
 
-		Usuarios usuario = tblLancamentos.getSelectionModel().getSelectedItem();
+		Usuario usuario = tblLancamentos.getSelectionModel().getSelectedItem();
 		if (usuario != null) {
 			txtUsuario.setText(usuario.getUsuario());
 			txtSenha.setText(usuario.getSenha());
@@ -220,9 +220,9 @@ public class FrmCadastroUsuarioController implements Initializable {
 
 		choiceFilter.setItems(FXCollections.observableArrayList("ID", "USUARIO", "SENHA"));
 
-		tblColumnId.setCellValueFactory(new PropertyValueFactory<Usuarios, Integer>("codigo"));
-		tblColumnUsuario.setCellValueFactory(new PropertyValueFactory<Usuarios, String>("usuario"));
-		tblColumnSenha.setCellValueFactory(new PropertyValueFactory<Usuarios, String>("senha"));
+		tblColumnId.setCellValueFactory(new PropertyValueFactory<Usuario, Integer>("codigo"));
+		tblColumnUsuario.setCellValueFactory(new PropertyValueFactory<Usuario, String>("usuario"));
+		tblColumnSenha.setCellValueFactory(new PropertyValueFactory<Usuario, String>("senha"));
 
 		choiceFilter.setValue("ID");
 	}
@@ -255,12 +255,12 @@ public class FrmCadastroUsuarioController implements Initializable {
 
 	public void editarCadastroExistente() {
 
-		Usuarios usu = tblLancamentos.getSelectionModel().getSelectedItem();
+		Usuario usu = tblLancamentos.getSelectionModel().getSelectedItem();
 
 		if (txtSenha.getText().equals(txtConfirmarSenha.getText())) {
 			FrmCadastroUsuarioDAO cadastro = new FrmCadastroUsuarioDAO();
 
-			Usuarios usuario = new Usuarios();
+			Usuario usuario = new Usuario();
 			usuario.setCodigo(usu.getCodigo());
 			usuario.setSenha(txtSenha.getText());
 
@@ -282,22 +282,22 @@ public class FrmCadastroUsuarioController implements Initializable {
 	}
 
 	public void alimentarTable() {
-		ObservableList<Usuarios> list = new FrmCadastroUsuarioDAO().capturarTodosUsuarios();
+		ObservableList<Usuario> list = new FrmCadastroUsuarioDAO().capturarTodosUsuarios();
 		tblLancamentos.setItems(list);
 	}
 
 	public void alimentarTabelaFiltradaCodigo(Integer codigo) {
-		ObservableList<Usuarios> list = new FrmCadastroUsuarioDAO().capturarUsuariosCodigo(codigo);
+		ObservableList<Usuario> list = new FrmCadastroUsuarioDAO().capturarUsuariosCodigo(codigo);
 		tblLancamentos.setItems(list);
 	}
 
 	public void alimentarTabelaFiltradaLogin(String usuario) {
-		ObservableList<Usuarios> list = new FrmCadastroUsuarioDAO().capturarUsuariosLogin(usuario);
+		ObservableList<Usuario> list = new FrmCadastroUsuarioDAO().capturarUsuariosLogin(usuario);
 		tblLancamentos.setItems(list);
 	}
 
 	public void alimentarTabelaFiltradaSenha(String senha) {
-		ObservableList<Usuarios> list = new FrmCadastroUsuarioDAO().capturarUsuariosSenha(senha);
+		ObservableList<Usuario> list = new FrmCadastroUsuarioDAO().capturarUsuariosSenha(senha);
 		tblLancamentos.setItems(list);
 	}
 

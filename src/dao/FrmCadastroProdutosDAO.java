@@ -8,17 +8,17 @@ import java.sql.SQLException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import jdbc.ConnectionFactory;
-import model.Produtos;
+import model.Produto;
 import util.Util;
 
 public class FrmCadastroProdutosDAO {
 	
-	public ObservableList<Produtos> capturarTodosProdutos() {
+	public ObservableList<Produto> capturarTodosProdutos() {
 		Connection conn = new ConnectionFactory().getConnection();
 		PreparedStatement ps;
 		ResultSet rs;
-		Produtos produto;
-		ObservableList<Produtos> lista = FXCollections.observableArrayList();
+		Produto produto;
+		ObservableList<Produto> lista = FXCollections.observableArrayList();
 
 		try {
 			ps = conn.prepareStatement("select * from produtos;");
@@ -26,7 +26,7 @@ public class FrmCadastroProdutosDAO {
 			rs = ps.executeQuery();
 
 			while (rs.next()) {
-				produto = new Produtos();
+				produto = new Produto();
 
 				produto.setCodigo(rs.getInt(1));
 				produto.setNome(rs.getString(2));
@@ -42,12 +42,12 @@ public class FrmCadastroProdutosDAO {
 		return lista;
 	}
 	
-	public ObservableList<Produtos> capturarProdutosId(Integer codigo) {
+	public ObservableList<Produto> capturarProdutosId(Integer codigo) {
 		Connection conn = new ConnectionFactory().getConnection();
 		PreparedStatement ps;
 		ResultSet rs;
-		Produtos produto;
-		ObservableList<Produtos> lista = FXCollections.observableArrayList();
+		Produto produto;
+		ObservableList<Produto> lista = FXCollections.observableArrayList();
 
 		try {
 			ps = conn.prepareStatement("select * from produtos where id_produto = ?;");
@@ -56,7 +56,7 @@ public class FrmCadastroProdutosDAO {
 			rs = ps.executeQuery();
 
 			while (rs.next()) {
-				produto = new Produtos();
+				produto = new Produto();
 
 				produto.setCodigo(rs.getInt(1));
 				produto.setNome(rs.getString(2));
@@ -73,12 +73,12 @@ public class FrmCadastroProdutosDAO {
 		return lista;
 	}
 	
-	public ObservableList<Produtos> capturarProdutosNome(String nome) {
+	public ObservableList<Produto> capturarProdutosNome(String nome) {
 		Connection conn = new ConnectionFactory().getConnection();
 		PreparedStatement ps;
 		ResultSet rs;
-		Produtos produto;
-		ObservableList<Produtos> lista = FXCollections.observableArrayList();
+		Produto produto;
+		ObservableList<Produto> lista = FXCollections.observableArrayList();
 
 		try {
 			ps = conn.prepareStatement("select * from produtos where pro_nome like ?;");
@@ -87,7 +87,7 @@ public class FrmCadastroProdutosDAO {
 			rs = ps.executeQuery();
 
 			while (rs.next()) {
-				produto = new Produtos();
+				produto = new Produto();
 
 				produto.setCodigo(rs.getInt(1));
 				produto.setNome(rs.getString(2));
@@ -104,12 +104,12 @@ public class FrmCadastroProdutosDAO {
 		return lista;
 	}
 	
-	public ObservableList<Produtos> capturarProdutosPreco(Float valor) {
+	public ObservableList<Produto> capturarProdutosPreco(Float valor) {
 		Connection conn = new ConnectionFactory().getConnection();
 		PreparedStatement ps;
 		ResultSet rs;
-		Produtos produto;
-		ObservableList<Produtos> lista = FXCollections.observableArrayList();
+		Produto produto;
+		ObservableList<Produto> lista = FXCollections.observableArrayList();
 
 		try {
 			ps = conn.prepareStatement("select * from produtos where pro_preco_venda = ?;");
@@ -118,7 +118,7 @@ public class FrmCadastroProdutosDAO {
 			rs = ps.executeQuery();
 
 			while (rs.next()) {
-				produto = new Produtos();
+				produto = new Produto();
 
 				produto.setCodigo(rs.getInt(1));
 				produto.setNome(rs.getString(2));
@@ -135,12 +135,12 @@ public class FrmCadastroProdutosDAO {
 		return lista;
 	}
 	
-	public ObservableList<Produtos> capturarProdutosData(String data) {
+	public ObservableList<Produto> capturarProdutosData(String data) {
 		Connection conn = new ConnectionFactory().getConnection();
 		PreparedStatement ps;
 		ResultSet rs;
-		Produtos produto;
-		ObservableList<Produtos> lista = FXCollections.observableArrayList();
+		Produto produto;
+		ObservableList<Produto> lista = FXCollections.observableArrayList();
 
 		try {
 			ps = conn.prepareStatement("select * from produtos where pro_data_cadastro = ?;");
@@ -149,7 +149,7 @@ public class FrmCadastroProdutosDAO {
 			rs = ps.executeQuery();
 
 			while (rs.next()) {
-				produto = new Produtos();
+				produto = new Produto();
 
 				produto.setCodigo(rs.getInt(1));
 				produto.setNome(rs.getString(2));
@@ -184,7 +184,7 @@ public class FrmCadastroProdutosDAO {
 		}
 		return null;
 	}
-	public boolean excluirProduto(Produtos produto) {
+	public boolean excluirProduto(Produto produto) {
 		Connection conn = new ConnectionFactory().getConnection();
 		PreparedStatement ps;
 		
@@ -201,7 +201,7 @@ public class FrmCadastroProdutosDAO {
 		return false;
 	}
 	
-	public boolean editarProduto(Produtos produto) {
+	public boolean editarProduto(Produto produto) {
 		Connection conn = new ConnectionFactory().getConnection();
 		PreparedStatement ps;
 		
@@ -249,7 +249,7 @@ public class FrmCadastroProdutosDAO {
 		return false;
 	}
 	
-	public boolean adicionarProduto(Produtos produto) {
+	public boolean adicionarProduto(Produto produto) {
 		Connection conn = new ConnectionFactory().getConnection();
 		PreparedStatement ps;
 		

@@ -8,7 +8,7 @@ import java.sql.SQLException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import jdbc.ConnectionFactory;
-import model.Usuarios;
+import model.Usuario;
 
 public class FrmCadastroUsuarioDAO {
 
@@ -75,12 +75,12 @@ public class FrmCadastroUsuarioDAO {
 	 * 
 	 * @return ObservableList
 	 */
-	public ObservableList<Usuarios> capturarTodosUsuarios() {
+	public ObservableList<Usuario> capturarTodosUsuarios() {
 		Connection conn = new ConnectionFactory().getConnection();
 		PreparedStatement ps;
 		ResultSet rs;
-		Usuarios usuario;
-		ObservableList<Usuarios> lista = FXCollections.observableArrayList();
+		Usuario usuario;
+		ObservableList<Usuario> lista = FXCollections.observableArrayList();
 
 		try {
 			ps = conn.prepareStatement("select * from usuarios;");
@@ -88,7 +88,7 @@ public class FrmCadastroUsuarioDAO {
 			rs = ps.executeQuery();
 
 			while (rs.next()) {
-				usuario = new Usuarios();
+				usuario = new Usuario();
 
 				usuario.setCodigo(rs.getInt(1));
 				usuario.setUsuario(rs.getString(2));
@@ -110,12 +110,12 @@ public class FrmCadastroUsuarioDAO {
 	 *            contendo o possivel usuário(login);
 	 * @return ObservableList
 	 */
-	public ObservableList<Usuarios> capturarUsuariosLogin(String login) {
+	public ObservableList<Usuario> capturarUsuariosLogin(String login) {
 		Connection conn = new ConnectionFactory().getConnection();
 		PreparedStatement ps;
 		ResultSet rs;
-		Usuarios usuario;
-		ObservableList<Usuarios> lista = FXCollections.observableArrayList();
+		Usuario usuario;
+		ObservableList<Usuario> lista = FXCollections.observableArrayList();
 
 		try {
 			ps = conn.prepareStatement("select * from usuarios where usu_nome like ?;");
@@ -124,7 +124,7 @@ public class FrmCadastroUsuarioDAO {
 			rs = ps.executeQuery();
 
 			while (rs.next()) {
-				usuario = new Usuarios();
+				usuario = new Usuario();
 
 				usuario.setCodigo(rs.getInt(1));
 				usuario.setUsuario(rs.getString(2));
@@ -146,12 +146,12 @@ public class FrmCadastroUsuarioDAO {
 	 *            contendo a possivel senha;
 	 * @return ObservableList
 	 */
-	public ObservableList<Usuarios> capturarUsuariosSenha(String senha) {
+	public ObservableList<Usuario> capturarUsuariosSenha(String senha) {
 		Connection conn = new ConnectionFactory().getConnection();
 		PreparedStatement ps;
 		ResultSet rs;
-		Usuarios usuario;
-		ObservableList<Usuarios> lista = FXCollections.observableArrayList();
+		Usuario usuario;
+		ObservableList<Usuario> lista = FXCollections.observableArrayList();
 
 		try {
 			ps = conn.prepareStatement("select * from usuarios where usu_senha like ?;");
@@ -160,7 +160,7 @@ public class FrmCadastroUsuarioDAO {
 			rs = ps.executeQuery();
 
 			while (rs.next()) {
-				usuario = new Usuarios();
+				usuario = new Usuario();
 
 				usuario.setCodigo(rs.getInt(1));
 				usuario.setUsuario(rs.getString(2));
@@ -182,12 +182,12 @@ public class FrmCadastroUsuarioDAO {
 	 *            contendo o possivel código do cliente;
 	 * @return ObservableList
 	 */
-	public ObservableList<Usuarios> capturarUsuariosCodigo(Integer codigo) {
+	public ObservableList<Usuario> capturarUsuariosCodigo(Integer codigo) {
 		Connection conn = new ConnectionFactory().getConnection();
 		PreparedStatement ps;
 		ResultSet rs;
-		Usuarios usuario;
-		ObservableList<Usuarios> lista = FXCollections.observableArrayList();
+		Usuario usuario;
+		ObservableList<Usuario> lista = FXCollections.observableArrayList();
 
 		try {
 			ps = conn.prepareStatement("select * from usuarios where idusuarios = ?;");
@@ -196,7 +196,7 @@ public class FrmCadastroUsuarioDAO {
 			rs = ps.executeQuery();
 
 			while (rs.next()) {
-				usuario = new Usuarios();
+				usuario = new Usuario();
 
 				usuario.setCodigo(rs.getInt(1));
 				usuario.setUsuario(rs.getString(2));
@@ -243,7 +243,7 @@ public class FrmCadastroUsuarioDAO {
 	 *            - Usuário a ser editado
 	 * @return Boolean
 	 */
-	public boolean editarUsuario(Usuarios usuarios) {
+	public boolean editarUsuario(Usuario usuarios) {
 		Connection conn = new ConnectionFactory().getConnection();
 		PreparedStatement ps;
 

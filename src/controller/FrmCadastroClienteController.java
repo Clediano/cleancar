@@ -30,7 +30,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
-import model.Clientes;
+import model.Cliente;
 import util.TextFieldFormatter;
 import util.Util;
 
@@ -67,7 +67,7 @@ public class FrmCadastroClienteController implements Initializable {
 	private TextField txtTelefone;
 
 	@FXML
-	private TableView<Clientes> tblClientes;
+	private TableView<Cliente> tblClientes;
 
 	@FXML
 	private Button btnEditar;
@@ -106,33 +106,33 @@ public class FrmCadastroClienteController implements Initializable {
 	private TabPane tabPane;
 
 	@FXML
-	private TableColumn<Integer, Clientes> tblColumnId;
+	private TableColumn<Integer, Cliente> tblColumnId;
 
 	@FXML
-	private TableColumn<String, Clientes> tblColumnNome;
+	private TableColumn<String, Cliente> tblColumnNome;
 
 	@FXML
-	private TableColumn<String, Clientes> tblColumnSobrenome;
+	private TableColumn<String, Cliente> tblColumnSobrenome;
 
 	@FXML
-	private TableColumn<String, Clientes> tblColumnCnpjCpf;
+	private TableColumn<String, Cliente> tblColumnCnpjCpf;
 
 	@FXML
-	private TableColumn<String, Clientes> tblColumnPessoa;
+	private TableColumn<String, Cliente> tblColumnPessoa;
 
 	@FXML
-	private TableColumn<String, Clientes> tblColumnEmail;
+	private TableColumn<String, Cliente> tblColumnEmail;
 
 	@FXML
-	private TableColumn<Integer, Clientes> tblColumnTelefone;
+	private TableColumn<Integer, Cliente> tblColumnTelefone;
 
 	@FXML
-	private TableColumn<Date, Clientes> tblColumnCadastrado;
+	private TableColumn<Date, Cliente> tblColumnCadastrado;
 
 	@FXML
 	void onKeyDelPressed(KeyEvent key) {
 		if (key.getCode() == KeyCode.DELETE) {
-			Clientes cliente = tblClientes.getSelectionModel().getSelectedItem();
+			Cliente cliente = tblClientes.getSelectionModel().getSelectedItem();
 			cadastroCliente.removerCliente(cliente.getCodigo());
 
 			alimentarTable();
@@ -142,7 +142,7 @@ public class FrmCadastroClienteController implements Initializable {
 	@FXML
 	void handleGravar(ActionEvent event) {
 		if (!botaoEditarClicado) {
-			Clientes cliente = new Clientes();
+			Cliente cliente = new Cliente();
 
 			cliente.setNome(txtNome.getText());
 			cliente.setSobrenome(txtSobrenome.getText());
@@ -161,7 +161,7 @@ public class FrmCadastroClienteController implements Initializable {
 			selectionModel.select(hBoxConsulta);
 
 		} else {
-			Clientes cliente = new Clientes();
+			Cliente cliente = new Cliente();
 
 			cliente.setCodigo(Integer.parseInt(lblCodigo.getText()));
 			cliente.setNome(txtNome.getText());
@@ -218,7 +218,7 @@ public class FrmCadastroClienteController implements Initializable {
 	void handleExcluir(ActionEvent event) {
 		if (tblClientes.getSelectionModel().getSelectedItem() != null) {
 			if (Util.alertaExclusao() == ButtonType.OK) {
-				Clientes cliente = tblClientes.getSelectionModel().getSelectedItem();
+				Cliente cliente = tblClientes.getSelectionModel().getSelectedItem();
 				new FrmCadastroClienteDAO().removerCliente(cliente.getCodigo());
 			}
 			alimentarTable();
@@ -228,7 +228,7 @@ public class FrmCadastroClienteController implements Initializable {
 	@FXML
 	void abrirClienteSelecionado(MouseEvent event) {
 		if (event.getClickCount() == 2) {
-			Clientes cliente = tblClientes.getSelectionModel().getSelectedItem();
+			Cliente cliente = tblClientes.getSelectionModel().getSelectedItem();
 
 			cliente.setCodigo(cliente.getCodigo());
 			cliente.setNome(cliente.getNome());
@@ -275,7 +275,7 @@ public class FrmCadastroClienteController implements Initializable {
 	void handleEditar(ActionEvent event) {
 		if (tblClientes.getSelectionModel().getSelectedItem() != null) {
 
-			Clientes cliente = tblClientes.getSelectionModel().getSelectedItem();
+			Cliente cliente = tblClientes.getSelectionModel().getSelectedItem();
 
 			cliente.setCodigo(cliente.getCodigo());
 			cliente.setNome(cliente.getNome());
@@ -294,7 +294,7 @@ public class FrmCadastroClienteController implements Initializable {
 		botaoEditarClicado = true;
 	}
 
-	public void alimentarTelaCadastro(Clientes cliente) {
+	public void alimentarTelaCadastro(Cliente cliente) {
 		lblCodigo.setText(cliente.getCodigo().toString());
 		txtNome.setText(cliente.getNome());
 		txtSobrenome.setText(cliente.getSobrenome());
@@ -421,20 +421,20 @@ public class FrmCadastroClienteController implements Initializable {
 
 		tipoPessoa.setItems(FXCollections.observableArrayList("Física", "Jurídica"));
 
-		tblColumnId.setCellValueFactory(new PropertyValueFactory<Integer, Clientes>("codigo"));
-		tblColumnNome.setCellValueFactory(new PropertyValueFactory<String, Clientes>("nome"));
-		tblColumnSobrenome.setCellValueFactory(new PropertyValueFactory<String, Clientes>("sobrenome"));
-		tblColumnCnpjCpf.setCellValueFactory(new PropertyValueFactory<String, Clientes>("cnpj"));
-		tblColumnEmail.setCellValueFactory(new PropertyValueFactory<String, Clientes>("email"));
-		tblColumnTelefone.setCellValueFactory(new PropertyValueFactory<Integer, Clientes>("telefone"));
-		tblColumnCadastrado.setCellValueFactory(new PropertyValueFactory<Date, Clientes>("dataCadastro"));
-		tblColumnPessoa.setCellValueFactory(new PropertyValueFactory<String, Clientes>("pessoa"));
+		tblColumnId.setCellValueFactory(new PropertyValueFactory<Integer, Cliente>("codigo"));
+		tblColumnNome.setCellValueFactory(new PropertyValueFactory<String, Cliente>("nome"));
+		tblColumnSobrenome.setCellValueFactory(new PropertyValueFactory<String, Cliente>("sobrenome"));
+		tblColumnCnpjCpf.setCellValueFactory(new PropertyValueFactory<String, Cliente>("cnpj"));
+		tblColumnEmail.setCellValueFactory(new PropertyValueFactory<String, Cliente>("email"));
+		tblColumnTelefone.setCellValueFactory(new PropertyValueFactory<Integer, Cliente>("telefone"));
+		tblColumnCadastrado.setCellValueFactory(new PropertyValueFactory<Date, Cliente>("dataCadastro"));
+		tblColumnPessoa.setCellValueFactory(new PropertyValueFactory<String, Cliente>("pessoa"));
 
 		choiceFilter.setValue("ID");
 	}
 
 	private void alimentarTable() {
-		ObservableList<Clientes> list = new FrmCadastroClienteDAO().capturarTodosClientes();
+		ObservableList<Cliente> list = new FrmCadastroClienteDAO().capturarTodosClientes();
 		tblClientes.setItems(list);
 	}
 }

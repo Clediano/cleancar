@@ -8,8 +8,8 @@ import java.sql.SQLException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import jdbc.ConnectionFactory;
-import model.Clientes;
-import model.Usuarios;
+import model.Cliente;
+import model.Usuario;
 
 public class FrmCadastroClienteDAO {
 
@@ -50,7 +50,7 @@ public class FrmCadastroClienteDAO {
 	 * @param senha
 	 * @return boolean
 	 */
-	public boolean cadastrarCliente(Clientes cliente) {
+	public boolean cadastrarCliente(Cliente cliente) {
 		Connection conn = new ConnectionFactory().getConnection();
 		PreparedStatement ps;
 
@@ -106,12 +106,12 @@ public class FrmCadastroClienteDAO {
 	 * 
 	 * @return ObservableList
 	 */
-	public ObservableList<Clientes> capturarTodosClientes() {
+	public ObservableList<Cliente> capturarTodosClientes() {
 		Connection conn = new ConnectionFactory().getConnection();
 		PreparedStatement ps;
 		ResultSet rs;
-		Clientes cliente;
-		ObservableList<Clientes> lista = FXCollections.observableArrayList();
+		Cliente cliente;
+		ObservableList<Cliente> lista = FXCollections.observableArrayList();
 
 		try {
 			ps = conn.prepareStatement("select * from clientes;");
@@ -119,7 +119,7 @@ public class FrmCadastroClienteDAO {
 			rs = ps.executeQuery();
 
 			while (rs.next()) {
-				cliente = new Clientes();
+				cliente = new Cliente();
 
 				cliente.setCodigo(rs.getInt(1));
 				cliente.setNome(rs.getString(2));
@@ -146,12 +146,12 @@ public class FrmCadastroClienteDAO {
 	 *            contendo o possivel cliente(nome);
 	 * @return ObservableList
 	 */
-	public ObservableList<Clientes> capturarClienteNome(String nomeCliente) {
+	public ObservableList<Cliente> capturarClienteNome(String nomeCliente) {
 		Connection conn = new ConnectionFactory().getConnection();
 		PreparedStatement ps;
 		ResultSet rs;
-		Clientes cliente;
-		ObservableList<Clientes> lista = FXCollections.observableArrayList();
+		Cliente cliente;
+		ObservableList<Cliente> lista = FXCollections.observableArrayList();
 
 		try {
 			ps = conn.prepareStatement("select * from clientes where cli_nome like ?;");
@@ -160,7 +160,7 @@ public class FrmCadastroClienteDAO {
 			rs = ps.executeQuery();
 
 			while (rs.next()) {
-				cliente = new Clientes();
+				cliente = new Cliente();
 
 				cliente.setCodigo(rs.getInt(1));
 				cliente.setNome(rs.getString(2));
@@ -180,12 +180,12 @@ public class FrmCadastroClienteDAO {
 		return lista;
 	}
 	
-	public ObservableList<Clientes> capturarClienteSobrenome(String sobrenomeCliente) {
+	public ObservableList<Cliente> capturarClienteSobrenome(String sobrenomeCliente) {
 		Connection conn = new ConnectionFactory().getConnection();
 		PreparedStatement ps;
 		ResultSet rs;
-		Clientes cliente;
-		ObservableList<Clientes> lista = FXCollections.observableArrayList();
+		Cliente cliente;
+		ObservableList<Cliente> lista = FXCollections.observableArrayList();
 
 		try {
 			ps = conn.prepareStatement("select * from clientes where cli_sobrenome like ?;");
@@ -194,7 +194,7 @@ public class FrmCadastroClienteDAO {
 			rs = ps.executeQuery();
 
 			while (rs.next()) {
-				cliente = new Clientes();
+				cliente = new Cliente();
 
 				cliente.setCodigo(rs.getInt(1));
 				cliente.setNome(rs.getString(2));
@@ -214,12 +214,12 @@ public class FrmCadastroClienteDAO {
 		return lista;
 	}
 	
-	public ObservableList<Clientes> capturarClienteEmail(String email) {
+	public ObservableList<Cliente> capturarClienteEmail(String email) {
 		Connection conn = new ConnectionFactory().getConnection();
 		PreparedStatement ps;
 		ResultSet rs;
-		Clientes cliente;
-		ObservableList<Clientes> lista = FXCollections.observableArrayList();
+		Cliente cliente;
+		ObservableList<Cliente> lista = FXCollections.observableArrayList();
 
 		try {
 			ps = conn.prepareStatement("select * from clientes where cli_email like ?;");
@@ -228,7 +228,7 @@ public class FrmCadastroClienteDAO {
 			rs = ps.executeQuery();
 
 			while (rs.next()) {
-				cliente = new Clientes();
+				cliente = new Cliente();
 
 				cliente.setCodigo(rs.getInt(1));
 				cliente.setNome(rs.getString(2));
@@ -248,12 +248,12 @@ public class FrmCadastroClienteDAO {
 		return lista;
 	}
 	
-	public ObservableList<Clientes> capturarClienteTelefone(String telefone) {
+	public ObservableList<Cliente> capturarClienteTelefone(String telefone) {
 		Connection conn = new ConnectionFactory().getConnection();
 		PreparedStatement ps;
 		ResultSet rs;
-		Clientes cliente;
-		ObservableList<Clientes> lista = FXCollections.observableArrayList();
+		Cliente cliente;
+		ObservableList<Cliente> lista = FXCollections.observableArrayList();
 
 		try {
 			ps = conn.prepareStatement("select * from clientes where cli_email like ?;");
@@ -262,7 +262,7 @@ public class FrmCadastroClienteDAO {
 			rs = ps.executeQuery();
 
 			while (rs.next()) {
-				cliente = new Clientes();
+				cliente = new Cliente();
 
 				cliente.setCodigo(rs.getInt(1));
 				cliente.setNome(rs.getString(2));
@@ -282,12 +282,12 @@ public class FrmCadastroClienteDAO {
 		return lista;
 	}
 	
-	public ObservableList<Clientes> capturarClienteData(String data) {
+	public ObservableList<Cliente> capturarClienteData(String data) {
 		Connection conn = new ConnectionFactory().getConnection();
 		PreparedStatement ps;
 		ResultSet rs;
-		Clientes cliente;
-		ObservableList<Clientes> lista = FXCollections.observableArrayList();
+		Cliente cliente;
+		ObservableList<Cliente> lista = FXCollections.observableArrayList();
 
 		try {
 			ps = conn.prepareStatement("select * from clientes where cli_data_cadastro = ?;");
@@ -296,7 +296,7 @@ public class FrmCadastroClienteDAO {
 			rs = ps.executeQuery();
 
 			while (rs.next()) {
-				cliente = new Clientes();
+				cliente = new Cliente();
 
 				cliente.setCodigo(rs.getInt(1));
 				cliente.setNome(rs.getString(2));
@@ -316,12 +316,12 @@ public class FrmCadastroClienteDAO {
 		return lista;
 	}
 	
-	public ObservableList<Clientes> capturarClienteCnpjCpf(String cnpjCpf) {
+	public ObservableList<Cliente> capturarClienteCnpjCpf(String cnpjCpf) {
 		Connection conn = new ConnectionFactory().getConnection();
 		PreparedStatement ps;
 		ResultSet rs;
-		Clientes cliente;
-		ObservableList<Clientes> lista = FXCollections.observableArrayList();
+		Cliente cliente;
+		ObservableList<Cliente> lista = FXCollections.observableArrayList();
 
 		try {
 			ps = conn.prepareStatement("select * from clientes where cli_cnpj like ?;");
@@ -330,7 +330,7 @@ public class FrmCadastroClienteDAO {
 			rs = ps.executeQuery();
 
 			while (rs.next()) {
-				cliente = new Clientes();
+				cliente = new Cliente();
 
 				cliente.setCodigo(rs.getInt(1));
 				cliente.setNome(rs.getString(2));
@@ -382,7 +382,7 @@ public class FrmCadastroClienteDAO {
 	 *            - Usuário a ser editado
 	 * @return Boolean
 	 */
-	public boolean editarCliente(Clientes cliente) {
+	public boolean editarCliente(Cliente cliente) {
 		Connection conn = new ConnectionFactory().getConnection();
 		PreparedStatement ps;
 
@@ -415,12 +415,12 @@ public class FrmCadastroClienteDAO {
 		return false;
 	}
 	
-	public ObservableList<Clientes> capturarClientesId(Integer id) {
+	public ObservableList<Cliente> capturarClientesId(Integer id) {
 		Connection conn = new ConnectionFactory().getConnection();
 		PreparedStatement ps;
 		ResultSet rs;
-		Clientes cliente;
-		ObservableList<Clientes> lista = FXCollections.observableArrayList();
+		Cliente cliente;
+		ObservableList<Cliente> lista = FXCollections.observableArrayList();
 
 		try {
 			ps = conn.prepareStatement("select * from clientes where id_cliente = ?;");
@@ -429,7 +429,7 @@ public class FrmCadastroClienteDAO {
 			rs = ps.executeQuery();
 
 			while (rs.next()) {
-				cliente = new Clientes();
+				cliente = new Cliente();
 
 				cliente.setCodigo(rs.getInt(1));
 				cliente.setNome(rs.getString(2));

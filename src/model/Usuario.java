@@ -1,16 +1,16 @@
 package model;
 
-public class Usuarios {
+public class Usuario {
 	private String usuario;
 	private String senha;
 	private Integer codigo;
 	
-	public Usuarios(String usuario, String senha) {
+	public Usuario(String usuario, String senha) {
 		this.usuario = usuario;
 		this.senha = senha;
 	}
 
-	public Usuarios() {
+	public Usuario() {
 	}
 
 	public String getUsuario() {

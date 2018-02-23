@@ -3,7 +3,7 @@ package model;
 import java.sql.Date;
 import java.time.LocalDate;
 
-public class Clientes {
+public class Cliente {
 
 	private Integer codigo;
 	private String nome;
@@ -14,7 +14,7 @@ public class Clientes {
 	private String pessoa;
 	private Date dataCadastro;
 
-	public Clientes(String nome, String sobrenome, String cnpj, String email, String telefone, Date dtaCadastro) {
+	public Cliente(String nome, String sobrenome, String cnpj, String email, String telefone, Date dtaCadastro) {
 		super();
 		this.nome = nome;
 		this.sobrenome = sobrenome;
@@ -24,7 +24,7 @@ public class Clientes {
 		this.dataCadastro = dtaCadastro;
 	}
 
-	public Clientes() {
+	public Cliente() {
 		super();
 	}
 

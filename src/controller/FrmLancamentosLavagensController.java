@@ -63,10 +63,10 @@ public class FrmLancamentosLavagensController {
     private Button btnExcluir;
 
     @FXML
-    private DatePicker txtData;
+    private TableColumn<?, ?> tblColumnObservacao;
 
     @FXML
-    private TableColumn<?, ?> tblColumnObservacao;
+    private Button btnAbrir;
 
     @FXML
     private ComboBox<?> cbFiltro;
@@ -78,13 +78,13 @@ public class FrmLancamentosLavagensController {
     private Button btnEditar;
 
     @FXML
+    private DatePicker txtDataFechamento;
+
+    @FXML
     private TableView<?> tblItensLancamentos;
 
     @FXML
     private HBox hBox;
-
-    @FXML
-    private Button btnLancar;
 
     @FXML
     private Tab hBoxCadastro;
@@ -96,6 +96,9 @@ public class FrmLancamentosLavagensController {
     private Label lblNomeProduto;
 
     @FXML
+    private Label lblValorTotal;
+
+    @FXML
     private TextField txtValor;
 
     @FXML
@@ -105,58 +108,101 @@ public class FrmLancamentosLavagensController {
     private TabPane tabPane;
 
     @FXML
-    void handleLancar(ActionEvent event) {
-    	
+    private DatePicker txtDataInclusao;
+
+    @FXML
+    void handleAbrir(ActionEvent event) {
+
+    }
+
+    @FXML
+    void handleFechar(ActionEvent event) {
+
+    }
+
+    @FXML
+    void handleFechar(ActionEvent event) {
+
+    }
+
+    @FXML
+    void handleDuplicar(ActionEvent event) {
+
+    }
+
+    @FXML
+    void onKeyDelPressed(ActionEvent event) {
+
     }
 
     @FXML
     void onKeyClientePressed(ActionEvent event) {
-    	
-    }
 
-    @FXML
-    void handleSearchCliente(ActionEvent event) {
-    	
     }
 
     @FXML
     void onKeyProdutoPressed(ActionEvent event) {
-    	
+
+    }
+
+    @FXML
+    void onKeyProdutoPressed(ActionEvent event) {
+
     }
 
     @FXML
     void handleSearchProduto(ActionEvent event) {
-    	
+
+    }
+
+    @FXML
+    void onKeyClientePressed(ActionEvent event) {
+
+    }
+
+    @FXML
+    void handleSearchCliente(ActionEvent event) {
+
     }
 
     @FXML
     void handleAdicionar(ActionEvent event) {
-    	
+
     }
 
     @FXML
     void onKeyPressedAdicionar(ActionEvent event) {
-    	
+
+    }
+
+    @FXML
+    void onKeyPlacaPressed(ActionEvent event) {
+
+    }
+
+    @FXML
+    void handleSearchPlaca(ActionEvent event) {
+
     }
 
     @FXML
     void handleIncluir(ActionEvent event) {
-    	
+
     }
 
     @FXML
     void handleExcluir(ActionEvent event) {
-    	
+
     }
 
     @FXML
     void handleEditar(ActionEvent event) {
-    	
+
     }
 
     @FXML
     void handleCancelar(ActionEvent event) {
-    	
+
     }
 
     @FXML
@@ -164,8 +210,4 @@ public class FrmLancamentosLavagensController {
     	FrmContainerController.parentFrmLancamentosLavagens.setVisible(false);
     }
 
-    @FXML
-    void onKeySearchPressed(ActionEvent event) {
-    	
-    }
 }
