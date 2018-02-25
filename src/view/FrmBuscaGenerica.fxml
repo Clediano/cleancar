@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="513.0" prefWidth="701.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.FrmBuscaGenericaController">
+   <children>
+      <BorderPane fx:id="telaPesquisa" layoutX="180.0" layoutY="129.0" prefHeight="513.0" prefWidth="701.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <top>
+            <HBox alignment="CENTER" layoutX="142.0" prefHeight="31.0" prefWidth="701.0">
+               <children>
+                  <TextField fx:id="textPesquisa" onKeyPressed="#pesquisarDadosEnter" prefHeight="32.0" prefWidth="541.0" />
+                  <ChoiceBox fx:id="cBoxPesquisa" prefHeight="31.0" prefWidth="162.0" />
+               </children>
+            </HBox>
+         </top>
+         <bottom>
+            <HBox alignment="CENTER" prefHeight="74.0" prefWidth="701.0" BorderPane.alignment="CENTER">
+               <children>
+                  <Button fx:id="btnPesquisarBusca" mnemonicParsing="false" onAction="#pesquisarBusca" prefHeight="39.0" prefWidth="85.0" text="Pesquisar" />
+                  <Button fx:id="btnCancelarBusca" mnemonicParsing="false" onAction="#cancelarBusca" prefHeight="39.0" prefWidth="85.0" text="Cancelar">
+                     <HBox.margin>
+                        <Insets left="35.0" />
+                     </HBox.margin>
+                  </Button>
+               </children>
+            </HBox>
+         </bottom>
+      </BorderPane>
+   </children>
+</AnchorPane>
