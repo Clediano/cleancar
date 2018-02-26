@@ -1,0 +1,83 @@
+.btnGravar{
+	-fx-text-fill: white;
+	-fx-background-color: linear-gradient(#61a2b1, #2A5058);
+	-fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.6), 5, 0.0, 0, 1);
+	-fx-pref-height: 36;
+	-fx-pref-width: 84;
+}
+.btnGravar:hover{
+	-fx-background-color: rgba(31, 149, 206, 0.71);
+	-fx-border-radius: 2.0%;
+}
+
+.btnIncluir{
+	-fx-text-fill: white;
+	-fx-background-color: linear-gradient(#61a2b1, #2A5058);
+	-fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.6), 5, 0.0, 0, 1);
+	-fx-pref-height: 36;
+	-fx-pref-width: 84;
+}
+.btnIncluir:hover{
+	-fx-background-color: rgba(31, 149, 206, 0.71);
+	-fx-border-radius: 2.0%;
+}
+
+.btnExcluir{
+	-fx-text-fill: white;
+	-fx-background-color: linear-gradient(#61a2b1, #2A5058);
+	-fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.6), 5, 0.0, 0, 1);
+	-fx-pref-height: 36;
+	-fx-pref-width: 84;
+}
+.btnExcluir:hover{
+	-fx-background-color: rgba(31, 149, 206, 0.71);
+	-fx-border-radius: 2.0%;
+}
+
+.btnEditar{
+	-fx-text-fill: white;
+	-fx-background-color: linear-gradient(#61a2b1, #2A5058);
+	-fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.6), 5, 0.0, 0, 1);
+	-fx-pref-height: 36;
+	-fx-pref-width: 84;
+}
+.btnEditar:hover{
+	-fx-background-color: rgba(31, 149, 206, 0.71);
+	-fx-border-radius: 2.0%;
+}
+
+.btnCancelar{
+	-fx-text-fill: white;
+	-fx-background-color: linear-gradient(#61a2b1, #2A5058);
+	-fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.6), 5, 0.0, 0, 1);
+	-fx-pref-height: 36;
+	-fx-pref-width: 84;
+}
+.btnCancelar:hover{
+	-fx-background-color: rgba(31, 149, 206, 0.71);
+	-fx-border-radius: 2.0%;
+}
+
+.btnFechar{
+	-fx-text-fill: white;
+	-fx-background-color: linear-gradient(#61a2b1, #2A5058);
+	-fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.6), 5, 0.0, 0, 1);
+	-fx-pref-height: 36;
+	-fx-pref-width: 84;
+}
+.btnFechar:hover{
+	-fx-background-color: rgba(31, 149, 206, 0.71);
+	-fx-border-radius: 2.0%;
+}
+
+.btnCancelarCadastro{
+	-fx-text-fill: white;
+	-fx-background-color: linear-gradient(#61a2b1, #2A5058);
+	-fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.6), 5, 0.0, 0, 1);
+	-fx-pref-height: 36;
+	-fx-pref-width: 84;
+}
+.btnCancelarCadastro:hover{
+	-fx-background-color: rgba(31, 149, 206, 0.71);
+	-fx-border-radius: 2.0%;
+}

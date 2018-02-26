@@ -42,12 +42,12 @@ public class FrmCadastroProdutosDAO {
 		return lista;
 	}
 	
-	public ObservableList<Produto> capturarProdutosId(Integer codigo) {
+	public Produto capturarProdutosId(Integer codigo) {
 		Connection conn = new ConnectionFactory().getConnection();
 		PreparedStatement ps;
 		ResultSet rs;
 		Produto produto;
-		ObservableList<Produto> lista = FXCollections.observableArrayList();
+		
 
 		try {
 			ps = conn.prepareStatement("select * from produtos where id_produto = ?;");
@@ -64,13 +64,13 @@ public class FrmCadastroProdutosDAO {
 				produto.setConversao(rs.getFloat(4));
 				produto.setDataCadastro(rs.getDate(5));
 
-				lista.add(produto);
+				return produto;
 			}
 
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return lista;
+		return null;
 	}
 	
 	public ObservableList<Produto> capturarProdutosNome(String nome) {

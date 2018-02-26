@@ -415,12 +415,11 @@ public class FrmCadastroClienteDAO {
 		return false;
 	}
 	
-	public ObservableList<Cliente> capturarClientesId(Integer id) {
+	public Cliente capturarClientesId(Integer id) {
 		Connection conn = new ConnectionFactory().getConnection();
 		PreparedStatement ps;
 		ResultSet rs;
 		Cliente cliente;
-		ObservableList<Cliente> lista = FXCollections.observableArrayList();
 
 		try {
 			ps = conn.prepareStatement("select * from clientes where id_cliente = ?;");
@@ -440,12 +439,12 @@ public class FrmCadastroClienteDAO {
 				cliente.setPessoa(rs.getString(7));
 				cliente.setDataCadastro(rs.getDate(8));
 
-				lista.add(cliente);
+				return cliente;
 			}
 
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return lista;
+		return null;
 	}
 }

@@ -327,6 +327,7 @@ public class FrmCadastroClienteController implements Initializable {
 		FrmContainerController.parentFrmCadastroClientes.setVisible(false);
 	}
 
+	@SuppressWarnings("unchecked")
 	@FXML
 	void onKeySearchPressed(KeyEvent event) {
 		if (event.getCode() == KeyCode.ENTER) {
@@ -335,7 +336,7 @@ public class FrmCadastroClienteController implements Initializable {
 					alimentarTable();
 				} else {
 					try {
-						tblClientes.setItems(cadastroCliente.capturarClientesId(Integer.parseInt(txtFilter.getText())));
+						tblClientes.setItems((ObservableList<Cliente>) cadastroCliente.capturarClientesId(Integer.parseInt(txtFilter.getText())));
 					} catch (NumberFormatException e) {
 						Alert alert = new Alert(AlertType.WARNING);
 						alert.setHeaderText("Digite um valor inteiro válido!");

@@ -71,7 +71,7 @@ public class FrmLancamentosLavagensDAO {
 		return null;
 	}	
 	
-	public ObservableList<Lavagem> capturarLavagensItens() {
+	public ObservableList<Lavagem> capturarLavagensItens(Integer idLavagem) {
 		Connection conn = new ConnectionFactory().getConnection();
 		PreparedStatement ps;
 		ResultSet rs;
@@ -97,6 +97,69 @@ public class FrmLancamentosLavagensDAO {
 		}	
 		return null;
 	}
+	
+
+	public Float somarValorItens(Integer idLavagem) {
+		Connection conn = new ConnectionFactory().getConnection();
+		PreparedStatement ps;
+		ResultSet rs;
+		Float valorTotal = null;
+		
+		try {
+			ps = conn.prepareStatement("select sum(lav_item_valor) from lavagens_itens where lav_id = ?;");
+			ps.setInt(1, idLavagem);
+			
+			rs = ps.executeQuery();
+			
+			while(rs.next()) {
+				valorTotal = rs.getFloat(1);
+				
+				return valorTotal;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}	
+		return null;
+	}
+	
+	
+	public Integer capturarIdProximaLavagem() {
+		Connection conn = new ConnectionFactory().getConnection();
+		PreparedStatement ps;
+		ResultSet rs;
+		
+		try {
+			ps = conn.prepareStatement("select max(id_lavagem) from lavagens;");
+
+			rs = ps.executeQuery();
+			
+			while(rs.next()) {
+				return rs.getInt(1) + 1;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}	
+	
+	
+	public Boolean deletarLavagem(Integer idLavagem) {
+		Connection conn = new ConnectionFactory().getConnection();
+		PreparedStatement ps;
+		
+		try {
+			ps = conn.prepareStatement("delete from lavagens where id_lavagem = ?;");
+			ps.setInt(1, idLavagem);
+
+			if(ps.executeUpdate() == 0) {
+				return false;
+			}		
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return true;
+	}	
+	
 	
 	public Produto capturarProduto(Integer idProduto) {
 		Connection conn = new ConnectionFactory().getConnection();

@@ -7,6 +7,7 @@ import java.util.ResourceBundle;
 
 import dao.FrmCadastroProdutosDAO;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -238,6 +239,7 @@ public class FrmCadastroProdutosController implements Initializable {
 		FrmContainerController.parentFrmCadastroProdutos.setVisible(false);
 	}
 
+	@SuppressWarnings("unchecked")
 	@FXML
 	void onKeySearchPressed(KeyEvent event) {
 		if (event.getCode() == KeyCode.ENTER) {
@@ -247,7 +249,7 @@ public class FrmCadastroProdutosController implements Initializable {
 				} else {
 					try {
 						tblProdutos
-								.setItems(cadastroProdutos.capturarProdutosId(Integer.parseInt(txtFilter.getText())));
+								.setItems((ObservableList<Produto>) cadastroProdutos.capturarProdutosId(Integer.parseInt(txtFilter.getText())));
 					} catch (NumberFormatException e) {
 						Alert alert = new Alert(AlertType.WARNING);
 						alert.setHeaderText("Digite um valor inteiro válido!");
