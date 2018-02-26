@@ -1,11 +1,16 @@
 package controller;
 
+import java.sql.Date;
+import java.time.LocalDate;
+
+import dao.FrmLancamentosLavagensDAO;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
+import javafx.scene.control.SingleSelectionModel;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TableColumn;
@@ -14,8 +19,14 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import model.Lavagem;
 
 public class FrmLancamentosLavagensController {
+	
+	private FrmLancamentosLavagensDAO lavagens = new FrmLancamentosLavagensDAO();
+
+    @FXML
+    private TableColumn<Lavagem, String> tblColumnObservacaoItem;
 
     @FXML
     private Button btnAdicionar;
@@ -24,31 +35,34 @@ public class FrmLancamentosLavagensController {
     private TextField txtProduto;
 
     @FXML
+    private TableColumn<Lavagem, String> tblColumnPlaca;
+
+    @FXML
     private Tab hBoxConsulta;
 
     @FXML
-    private TableColumn<?, ?> tblColumnCliente;
+    private TableColumn<Lavagem, Integer> tblColumnClienteCodigo;
+
+    @FXML
+    private TableColumn<Lavagem, Float> tblColumnValorItem;
 
     @FXML
     private Button btnFechar;
 
     @FXML
-    private TableColumn<?, ?> tblColumnValor;
+    private TableColumn<Lavagem, Float> tblColumnValor;
+
+    @FXML
+    private TableColumn<Lavagem, Integer> tblColumnProdutoItem;
 
     @FXML
     private TextField txtCliente;
 
     @FXML
-    private TableView<?> tblLancamentos;
-
-    @FXML
-    private TableColumn<?, ?> tblColumnProduto;
+    private TableView<Lavagem> tblLancamentos;
 
     @FXML
     private TextField txtFiltro;
-
-    @FXML
-    private TableColumn<?, ?> tblColumnData;
 
     @FXML
     private Button btnCancelar;
@@ -57,22 +71,25 @@ public class FrmLancamentosLavagensController {
     private TextArea txtObservacao;
 
     @FXML
-    private TableColumn<?, ?> tblColumnSituacao;
-
-    @FXML
     private Button btnExcluir;
 
     @FXML
-    private TableColumn<?, ?> tblColumnObservacao;
+    private Button btnFecharLavagem;
 
     @FXML
-    private Button btnAbrir;
+    private TableColumn<Lavagem, String> tblColumnObservacao;
 
     @FXML
-    private ComboBox<?> cbFiltro;
+    private Button btnCancelarLavagem;
+
+    @FXML
+    private ComboBox<String> cbFiltro;
 
     @FXML
     private Label lblNomeCliente;
+
+    @FXML
+    private TableColumn<Lavagem, Date> tblColumnDataItem;
 
     @FXML
     private Button btnEditar;
@@ -81,10 +98,13 @@ public class FrmLancamentosLavagensController {
     private DatePicker txtDataFechamento;
 
     @FXML
-    private TableView<?> tblItensLancamentos;
+    private TableView<Lavagem> tblItensLancamentos;
 
     @FXML
     private HBox hBox;
+
+    @FXML
+    private TextField txtPlaca;
 
     @FXML
     private Tab hBoxCadastro;
@@ -93,10 +113,31 @@ public class FrmLancamentosLavagensController {
     private Button btnIncluir;
 
     @FXML
+    private TableColumn<Lavagem, Date> tblColumnDataInclusao;
+    
+    @FXML
+    private TableColumn<Lavagem, String> tblColumnClienteNome;
+    
+    @FXML
+    private TableColumn<Lavagem, Integer> tblColumnClienteId;
+
+    @FXML
     private Label lblNomeProduto;
 
     @FXML
     private Label lblValorTotal;
+    
+    @FXML
+    private Label lblPlaca;
+    
+    @FXML
+    private Label lblSituacao;
+    
+    @FXML
+    private Label lblCorSituacao;
+    
+    @FXML
+    private Button btnAbrirLavagem;
 
     @FXML
     private TextField txtValor;
@@ -110,19 +151,20 @@ public class FrmLancamentosLavagensController {
     @FXML
     private DatePicker txtDataInclusao;
 
-    @FXML
-    void handleAbrir(ActionEvent event) {
 
+    @FXML
+    void handleAbrirLavagem(ActionEvent event) {
+    	
     }
 
     @FXML
-    void handleFechar(ActionEvent event) {
-
+    void handleFecharLavagem(ActionEvent event) {
+    	
     }
 
     @FXML
-    void handleFechar(ActionEvent event) {
-
+    void handleCancelarLavagem(ActionEvent event) {
+    	
     }
 
     @FXML
@@ -136,52 +178,42 @@ public class FrmLancamentosLavagensController {
     }
 
     @FXML
-    void onKeyClientePressed(ActionEvent event) {
+    void procurarClienteAtalho(ActionEvent event) {
 
     }
 
     @FXML
-    void onKeyProdutoPressed(ActionEvent event) {
+    void procurarProdutoAtalho(ActionEvent event) {
 
     }
 
     @FXML
-    void onKeyProdutoPressed(ActionEvent event) {
-
+    void procurarProdutoClick(ActionEvent event) {
+    	
     }
 
     @FXML
-    void handleSearchProduto(ActionEvent event) {
-
-    }
-
-    @FXML
-    void onKeyClientePressed(ActionEvent event) {
-
-    }
-
-    @FXML
-    void handleSearchCliente(ActionEvent event) {
-
+    void procurarClienteClick(ActionEvent event) {
+    	
     }
 
     @FXML
     void handleAdicionar(ActionEvent event) {
-
+    	
     }
 
     @FXML
     void onKeyPressedAdicionar(ActionEvent event) {
+    	
+    }
+
+    @FXML
+    void procurarPlacaAtalho(ActionEvent event) {
 
     }
 
     @FXML
-    void onKeyPlacaPressed(ActionEvent event) {
-
-    }
-
-    @FXML
-    void handleSearchPlaca(ActionEvent event) {
+    void procurarPlacaClick(ActionEvent event) {
 
     }
 
@@ -197,17 +229,42 @@ public class FrmLancamentosLavagensController {
 
     @FXML
     void handleEditar(ActionEvent event) {
-
+    	Lavagem lavagem = tblLancamentos.getSelectionModel().getSelectedItem();
+    	
+    	if(lavagem != null) {
+    		Lavagem lavagemCabecalho = lavagens.capturarDadosLavagemCabecalho(lavagem.getId());
+    		Lavagem lavagemItens = lavagens.capturarLavagensItens(lavagem.getId());
+    	}
     }
 
     @FXML
     void handleCancelar(ActionEvent event) {
-
+    	limparTelaCadastro();
     }
 
     @FXML
     void handleFechar(ActionEvent event) {
     	FrmContainerController.parentFrmLancamentosLavagens.setVisible(false);
     }
-
+    
+    private void selecioanrTelaCadastro() {
+    	SingleSelectionModel<Tab> selectionModel = tabPane.getSelectionModel();
+		selectionModel.select(hBoxCadastro);
+    }
+    private void selecionarTelaConsulta() {
+    	SingleSelectionModel<Tab> selectionModel = tabPane.getSelectionModel();
+		selectionModel.select(hBoxConsulta);
+    }
+    
+    private void limparTelaCadastro(){
+    	txtCliente.setText("");
+    	txtDataFechamento.setValue(null);
+    	txtDataInclusao.setValue(null);
+    	txtFiltro.setText("");
+    	txtObservacao.setText("");
+    	txtPlaca.setText("");
+    	txtProduto.setText("");
+    	txtValor.setText("");
+    	tblItensLancamentos.setItems(null);
+    }
 }

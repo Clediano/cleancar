@@ -3,10 +3,12 @@ package model;
 import java.sql.Date;
 
 public class Lavagem {
+	private Integer id;
 	private Cliente cliente;
 	private Produto produto;
 	private Placa placa;
 	private Float valor;
+	private Integer situacao;
 	
 	public Lavagem() {
 	}
@@ -52,6 +54,20 @@ public class Lavagem {
 	}
 	public void setDataFechamento(Date dataFechamento) {
 		this.dataFechamento = dataFechamento;
+	}
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+	public Integer getSituacao() {
+		return situacao;
+	}
+
+	public void setSituacao(Integer situacao) {
+		this.situacao = situacao;
 	}
 	private String observacao;
 	private Date dataCadastro;

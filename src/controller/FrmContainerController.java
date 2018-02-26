@@ -6,11 +6,8 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.MenuItem;
 import javafx.scene.layout.AnchorPane;
-import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 
 public class FrmContainerController {
 
@@ -58,7 +55,6 @@ public class FrmContainerController {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
 	}
     
 	@SuppressWarnings("static-access")
