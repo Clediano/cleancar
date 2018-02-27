@@ -18,6 +18,8 @@ public class FrmContainerController {
 	public static Parent parentFrmCadastroClientes;
 	
 	public static Parent parentFrmCaminhoBanco;
+	
+	public static Parent parentFrmCadastroPlacas;
 
     @FXML
     private MenuItem mnClientes;
@@ -97,6 +99,28 @@ public class FrmContainerController {
 			anchoPane.setRightAnchor(parentFrmCadastroClientes, 0.0);
 			
 			anchoPane.getChildren().add(parentFrmCadastroClientes);
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+    }
+    
+    @SuppressWarnings("static-access")
+	@FXML
+    void handleCadastroPlacas(ActionEvent event) {
+    	
+    	desativarPainel();
+    	
+    	try {
+			parentFrmCadastroPlacas = FXMLLoader.load(getClass().getClassLoader().getResource("view/FrmCadastroPlaca.fxml"));
+
+			anchoPane.setTopAnchor(parentFrmCadastroPlacas, 0.0);
+			anchoPane.setBottomAnchor(parentFrmCadastroPlacas, 0.0);
+			
+			anchoPane.setLeftAnchor(parentFrmCadastroPlacas, 0.0);
+			anchoPane.setRightAnchor(parentFrmCadastroPlacas, 0.0);
+			
+			anchoPane.getChildren().add(parentFrmCadastroPlacas);
 
 		} catch (IOException e) {
 			e.printStackTrace();

@@ -71,12 +71,12 @@ public class FrmLancamentosLavagensDAO {
 		return null;
 	}	
 	
-	public ObservableList<Lavagem> capturarLavagensItens(Integer idLavagem) {
+	public ObservableList<Produto> capturarLavagensItens(Integer idLavagem) {
 		Connection conn = new ConnectionFactory().getConnection();
 		PreparedStatement ps;
 		ResultSet rs;
-		Lavagem lavagem;
-		ObservableList<Lavagem> lavagensItens = FXCollections.observableArrayList();
+		Produto produtos;
+		ObservableList<Produto> lavagensItens = FXCollections.observableArrayList();
 		
 		try {
 			ps = conn.prepareStatement("select * from lavagens_itens where lav_id = ?;");
@@ -84,18 +84,78 @@ public class FrmLancamentosLavagensDAO {
 			rs = ps.executeQuery();
 			
 			while(rs.next()) {
-				lavagem = new Lavagem();
+				produtos = new Produto();
 				
-				lavagem.setProduto(capturarProduto(rs.getInt(3)));
-				lavagem.setValor(rs.getFloat(4));
+				produtos.setCodigo(rs.getInt(3));
+				produtos.setNome(capturarProduto(rs.getInt(3)).getNome());
+				produtos.setPrecoVenda(rs.getFloat(4));
 				
-				lavagensItens.add(lavagem);
+				lavagensItens.add(produtos);
 			}
 			return lavagensItens;
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}	
 		return null;
+	}
+	
+	public Boolean deletarLavagemItem(Integer idProdutoItem) {
+		Connection conn = new ConnectionFactory().getConnection();
+		PreparedStatement ps;
+		
+		try {
+			ps = conn.prepareStatement("delete from lavagens_itens where id_lav_item = ?;");
+			ps.setInt(1, idProdutoItem);
+			if(ps.executeUpdate() != 0){
+				return true;
+			}
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}	
+		return false;
+	}
+	
+	public Integer consultarSituacaoLavagem(Integer idLavagem) {
+		Connection conn = new ConnectionFactory().getConnection();
+		PreparedStatement ps;
+		ResultSet rs;
+		Integer situacao;
+		
+		try {
+			ps = conn.prepareStatement("SELECT lav_situacao from lavagens where id_lavagem = ?;");
+			ps.setInt(1, idLavagem);
+			
+			rs = ps.executeQuery();
+			
+			if(rs.next()) {
+				situacao = rs.getInt(1);
+				
+				return situacao;
+			}	
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	public Boolean alterarStatusLavagem(Integer status, Integer idLavagem) {
+		Connection conn = new ConnectionFactory().getConnection();
+		PreparedStatement ps;
+		
+		try {
+			ps = conn.prepareStatement("UPDATE FROM lavagens set(lav_situacao = ?) where id_lavagem = ?;");
+			ps.setInt(1, status);
+			ps.setInt(2, idLavagem);
+			
+			if(ps.executeUpdate() != 0){
+				return true;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}	
+		return false;
 	}
 	
 

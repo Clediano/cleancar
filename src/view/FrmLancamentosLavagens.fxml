@@ -147,7 +147,7 @@
                                                 <Insets bottom="2.0" top="5.0" />
                                              </GridPane.margin>
                                              <font>
-                                                <Font name="Arial Black" size="12.0" />
+                                                <Font name="Arial" size="12.0" />
                                              </font>
                                           </TextArea>
                                           <Label fx:id="lblNomeCliente" contentDisplay="CENTER" prefHeight="54.0" prefWidth="378.0" textFill="#54686b" GridPane.columnIndex="2">
@@ -300,11 +300,12 @@
                               </VBox>
 									</bottom>
                            <center>
-										<TableView fx:id="tblItensLancamentos" onKeyPressed="#onKeyDelPressed" onMouseClicked="#aliementarLabelProdutoNome" prefHeight="174.0" prefWidth="771.0" BorderPane.alignment="CENTER">
+										<TableView fx:id="tblItensLancamentos" onKeyPressed="#onKeyDelPressed" prefHeight="174.0" prefWidth="771.0" BorderPane.alignment="CENTER">
 											<columnResizePolicy>
 												<TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
 											</columnResizePolicy>
 											<columns>
+                                    <TableColumn fx:id="tblColumnProdutoItemId" prefWidth="140.0" text="ID" />
 												<TableColumn fx:id="tblColumnProdutoItem" prefWidth="140.0" text="Produto" />
                                     <TableColumn fx:id="tblColumnNomeProduto" prefWidth="140.0" text="Nome" />
                                     <TableColumn fx:id="tblColumnValorItem" prefWidth="140.0" text="Valor" />

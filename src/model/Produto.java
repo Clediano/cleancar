@@ -3,7 +3,7 @@ package model;
 import java.sql.Date;
 
 public class Produto {
-
+	private Integer id;
 	private Integer codigo;
 	private String nome;
 	private Float precoVenda;
@@ -60,6 +60,14 @@ public class Produto {
 
 	public void setDataCadastro(Date dataCadastro) {
 		this.dataCadastro = dataCadastro;
+	}
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
 

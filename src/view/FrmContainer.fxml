@@ -20,6 +20,10 @@
 						<MenuItem fx:id="mnProdutos" mnemonicParsing="false"
 							onAction="#handleCadastroProdutos" text="Produtos" />
 					</items>
+					<items>
+						<MenuItem fx:id="mnPlacas" mnemonicParsing="false"
+							onAction="#handleCadastroPlacas" text="Placas" />
+					</items>
 				</Menu>
 				<Menu mnemonicParsing="false" text="Lançamentos">
 					<items>

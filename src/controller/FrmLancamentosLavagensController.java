@@ -1,9 +1,11 @@
 package controller;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
+import java.util.Stack;
 
 import dao.FrmCadastroClienteDAO;
 import dao.FrmCadastroPlacaDAO;
@@ -13,7 +15,11 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
@@ -25,16 +31,22 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.paint.Color;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import model.Cliente;
 import model.Lavagem;
+import model.Placa;
 import model.Produto;
-import util.Util;
 
 public class FrmLancamentosLavagensController implements Initializable{
 	
@@ -42,15 +54,17 @@ public class FrmLancamentosLavagensController implements Initializable{
 	private FrmCadastroClienteDAO clientes = new FrmCadastroClienteDAO();
 	private FrmCadastroProdutosDAO produtos = new FrmCadastroProdutosDAO();
 	private FrmCadastroPlacaDAO placas = new FrmCadastroPlacaDAO();
+	
+	public static Stage stageTelaPesquisa;
 
     @FXML
-    private TableColumn<Lavagem, String> tblColumnNomeProduto;
+    private TableColumn<Produto, String> tblColumnNomeProduto;
 
     @FXML
     private Button btnAdicionar;
 
     @FXML
-    private TextField txtProduto;
+    public static TextField txtProduto;
 
     @FXML
     private TableColumn<Lavagem, String> tblColumnPlaca;
@@ -62,7 +76,7 @@ public class FrmLancamentosLavagensController implements Initializable{
     private TableColumn<Lavagem, Integer> tblColumnClienteCodigo;
 
     @FXML
-    private TableColumn<Lavagem, Float> tblColumnValorItem;
+    private TableColumn<Produto, Float> tblColumnValorItem;
 
     @FXML
     private Button btnFechar;
@@ -71,10 +85,13 @@ public class FrmLancamentosLavagensController implements Initializable{
     private TableColumn<Lavagem, Float> tblColumnValor;
 
     @FXML
-    private TableColumn<Lavagem, Integer> tblColumnProdutoItem;
+    private TableColumn<Produto, Integer> tblColumnProdutoItem;
+    
+    @FXML
+    private TableColumn<Produto, Integer> tblColumnProdutoItemId;
 
     @FXML
-    private TextField txtCliente;
+    public static TextField txtCliente;
 
     @FXML
     private TableView<Lavagem> tblLancamentos;
@@ -116,13 +133,13 @@ public class FrmLancamentosLavagensController implements Initializable{
     private DatePicker txtDataFechamento;
 
     @FXML
-    private TableView<Lavagem> tblItensLancamentos;
+    private TableView<Produto> tblItensLancamentos;
 
     @FXML
     private HBox hBox;
 
     @FXML
-    private TextField txtPlaca;
+    public static TextField txtPlaca;
 
     @FXML
     private Tab hBoxCadastro;
@@ -175,50 +192,123 @@ public class FrmLancamentosLavagensController implements Initializable{
 
     @FXML
     void handleAbrirLavagem(ActionEvent event) {
-    	
+    	Integer situacao = Integer.parseInt(lblSituacao.getText());
+    	Integer idLavagem = Integer.parseInt(lblId.getText());
+    	//0 = ABERTO
+    	//1 = FECHADO
+    	//2 = CANCELADO
+    	if(situacao == 1) {
+    		lavagens.alterarStatusLavagem(0, idLavagem);
+    		atualizarLabelStatusPedidos(lavagens.consultarSituacaoLavagem(idLavagem));
+    	}else if(situacao == 2) {
+    		Alert alert = new Alert(AlertType.WARNING);
+			alert.setHeaderText("Impossível abrir lavagem cancelada!");
+			alert.setContentText("Ação não permitida!");
+			alert.setTitle("Lavagem cancelada!");
+			alert.show();
+    	}else {
+    		Alert alert = new Alert(AlertType.WARNING);
+			alert.setHeaderText("Lavagem já está aberta!");
+			alert.setContentText("Ação não permitida!");
+			alert.setTitle("Confira!");
+			alert.show();
+    	}
+    }
+    
+    private void atualizarLabelStatusPedidos(Integer status) {
+    	if(status == 0) {
+    		lblSituacao.setText("ABERTA");
+    		lblCorSituacao.setStyle("-fx-background-color : #ffffff;");
+    	}else if(status == 1) {
+    		lblSituacao.setText("FECHADA");
+    		lblCorSituacao.setStyle("-fx-background-color : #ffff00;");
+    	}else if(status == 2){
+    		lblSituacao.setText("CANCELADO");
+    		lblCorSituacao.setStyle("-fx-background-color : #993333;");
+    	}
     }
 
     @FXML
     void handleFecharLavagem(ActionEvent event) {
-    	
+    	selecionarTelaConsulta();
+    	limparTelaCadastro();
     }
 
     @FXML
     void handleCancelarLavagem(ActionEvent event) {
-    	
+    	limparTelaCadastro();
+    	selecionarTelaConsulta();
     }
 
     @FXML
     void handleDuplicar(ActionEvent event) {
-
+    	Lavagem lavagem = lavagens.capturarDadosLavagemCabecalho(Integer.parseInt(lblId.getText()));
+    	ObservableList<Produto> produtos = lavagens.capturarLavagensItens(Integer.parseInt(lblId.getText()));
+    	
+    	lblId.setText(lavagens.capturarIdProximaLavagem().toString());
+    	txtCliente.setText(lavagem.getCliente().toString());
+    	alimentaLabelCliente(clientes.capturarClientesId(Integer.parseInt(txtCliente.getText())));
+    	txtProduto.setText(lavagem.getProduto().toString());
+    	alimentaLabelProduto(this.produtos.capturarProdutosId(Integer.parseInt(txtProduto.getText())));
+    	txtPlaca.setText(lavagem.getPlaca().toString());
+    	alimentaLabelPlaca(placas.pegarPlaca(Integer.parseInt(txtPlaca.getText())));
+    	
+    	txtObservacao.setText(lavagem.getObservacao());
+    	
+    	lblValorTotal.setText(lavagens.somarValorItens(lavagem.getId()).toString());
+    	
+    	txtDataInclusao.setEditable(false);
+    	txtDataInclusao.setValue(LocalDate.now());
+    	
+    	tblItensLancamentos.setItems(produtos);
+    }
+    
+    private void alimentaLabelProduto(Produto produto) {
+    	lblNomeProduto.setText(produto.getNome());
+    }
+    
+    private void alimentaLabelCliente(Cliente cliente) {
+    	lblNomeCliente.setText(cliente.getNome());
+    }
+    
+    private void alimentaLabelPlaca(Placa placa) {
+    	lblPlaca.setText(placa.getNumero());
     }
 
     @FXML
     void onKeyDelPressed(ActionEvent event) {
-
+    	Produto produto = tblItensLancamentos.getSelectionModel().getSelectedItem();
+    	if(produto != null) {
+    		lavagens.deletarLavagemItem(produto.getId());
+    	}
     }
 
     @FXML
     void procurarClienteAtalho(KeyEvent event) {
     	if(event.getCode() == KeyCode.F12) {
-    		txtCliente.setText(abrirTelaGenericaClientes().toString());
-    		lblNomeCliente.setText(clientes.capturarClientesId(Integer.parseInt(txtCliente.getText())).getNome());
+    		abrirTelaBuscaCliente();
     	}
     }
 
     @FXML
-    void procurarProdutoAtalho(ActionEvent event) {
-
+    void procurarProdutoAtalho(KeyEvent event) {
+    	if(event.getCode() == KeyCode.F12) {
+    		abrirTelaBuscaProduto();
+    	}
     }
 
     @FXML
-    void procurarProdutoClick(ActionEvent event) {
-    	
+    void procurarProdutoClick(MouseEvent event) {	
+    	if(event.getClickCount() == 1) {
+    		abrirTelaBuscaProduto();
+    	}
     }
 
     @FXML
-    void procurarClienteClick(ActionEvent event) {
-    	
+    void procurarClienteClick(MouseEvent event) {
+    	if(event.getClickCount() == 1) {
+    		abrirTelaBuscaCliente();
+    	}
     }
 
     @FXML
@@ -236,18 +326,14 @@ public class FrmLancamentosLavagensController implements Initializable{
     @FXML
     void procurarPlacaAtalho(KeyEvent event) {
     	if(event.getCode() == KeyCode.F12) {
-    		abrirTelaGenericaPlacas();
-    		
-    		txtPlaca.setText(abrirTelaGenericaPlacas().toString());
-        	lblPlaca.setText(placas.pegarPlaca(Integer.parseInt(txtPlaca.getText())).getNumero());
+    		abrirTelaBuscaPlaca();
     	}
     }
 
     @FXML
     void procurarPlacaClick(MouseEvent event) {
     	if(event.getClickCount() == 1) {
-    		txtPlaca.setText(abrirTelaGenericaPlacas().toString());
-        	lblPlaca.setText(placas.pegarPlaca(Integer.parseInt(txtPlaca.getText())).getNumero());	
+    		abrirTelaBuscaPlaca();
     	}
     }
 
@@ -257,9 +343,8 @@ public class FrmLancamentosLavagensController implements Initializable{
     	
     	txtDataInclusao.setValue(LocalDate.now());
     	lblId.setText(lavagens.capturarIdProximaLavagem().toString());
-    	txtCliente.requestFocus();
     }
-
+    
     @FXML
     void handleExcluir(ActionEvent event) {
     	Lavagem lavagem = tblLancamentos.getSelectionModel().getSelectedItem();
@@ -269,27 +354,67 @@ public class FrmLancamentosLavagensController implements Initializable{
     	}
     }
     
-    private Integer abrirTelaGenericaClientes() {
-		return null;
-		//MODIFICAR TELA DE ACORDO COM A NECESSIDADE DE PESQUISA DE UM CLIENTE
+    public void abrirTelaBuscaProduto() {
+    	Parent parent;
+		try {
+			parent = FXMLLoader.load(getClass().getClassLoader().getResource("view/FrmBuscaGenericaProduto.fxml"));
+			
+			Scene scene = new Scene(parent);
+			stageTelaPesquisa = new Stage();
+			
+			stageTelaPesquisa.setScene(scene);
+			stageTelaPesquisa.setTitle("Tela de pesquisa.");
+			stageTelaPesquisa.show();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
     }
     
-    private Integer abrirTelaGenericaPlacas() {
-		return null;
-		//MODIFICAR TELA DE ACORDO COM A NECESSIDADE DE PESQUISA DE UM CLIENTE
+    public void abrirTelaBuscaPlaca() {
+    	Parent parent;
+		try {
+			parent = FXMLLoader.load(getClass().getClassLoader().getResource("view/FrmBuscaGenericaPlaca.fxml"));
+			
+			Scene scene = new Scene(parent);
+			stageTelaPesquisa = new Stage();
+			
+			stageTelaPesquisa.setScene(scene);
+			stageTelaPesquisa.setTitle("Tela de pesquisa.");
+			stageTelaPesquisa.show();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+    }
+    
+    public void abrirTelaBuscaCliente() {
+    	Parent parent;
+		try {
+			parent = FXMLLoader.load(getClass().getClassLoader().getResource("view/FrmBuscaGenericaCliente.fxml"));
+			
+			Scene scene = new Scene(parent);
+			stageTelaPesquisa = new Stage();
+			
+			stageTelaPesquisa.setScene(scene);
+			stageTelaPesquisa.setTitle("Tela de pesquisa.");
+			stageTelaPesquisa.show();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
     }
     
     private void adicionarLavagem() {
     	
-    	Lavagem lavagem = new Lavagem();
-    	ObservableList<Lavagem> lavagens = FXCollections.observableArrayList();
+    	Produto produtoModelo = new Produto();
+    	ObservableList<Produto> produtosLista = FXCollections.observableArrayList();
     	Produto produto = produtos.capturarProdutosId(Integer.parseInt(txtProduto.getText()));
     	
-    	lavagem.setProduto(produto);
+    	produtoModelo.setCodigo(produto.getCodigo());
+    	produtoModelo.setNome(produto.getNome());
+    	produtoModelo.setPrecoVenda(produto.getPrecoVenda());
     	
-    	lavagens.add(lavagem);
+    	produtosLista.add(produtoModelo);
     	
-    	tblItensLancamentos.setItems(lavagens);
+    	tblItensLancamentos.setItems(produtosLista);
     }
 
     @FXML
@@ -311,20 +436,24 @@ public class FrmLancamentosLavagensController implements Initializable{
     	FrmContainerController.parentFrmLancamentosLavagens.setVisible(false);
     }
     
-    @FXML
-    void aliementarLabelProdutoNome(MouseEvent event) {
-    	if(event.getClickCount() == 1){
-    		Lavagem linhaSelecionada = tblItensLancamentos.getSelectionModel().getSelectedItem();
-    		Produto produtoSelecionado = produtos.capturarProdutosId(linhaSelecionada.getId());
-    		
-    		txtProduto.setText(produtoSelecionado.getCodigo().toString());
-    		lblNomeProduto.setText(produtoSelecionado.getNome());
-    	}
+    public void alimenarCamposProduto(Produto produto) {
+    	txtProduto.setText(produto.getCodigo().toString());
+    	lblNomeProduto.setText(produto.getNome().toUpperCase());
+    }
+    
+    public void alimenarCamposPlaca(Placa placa) {
+    	txtPlaca.setText(placa.getId().toString());
+    	lblNomeProduto.setText(placa.getNumero().toUpperCase());
+    }
+    
+    public void alimenarCamposCliente(Cliente cliente) {
+    	txtCliente.setText(cliente.getCodigo().toString());
+    	lblNomeCliente.setText(cliente.getNome().toUpperCase());
     }
     
     public void alimentaCabecalhoLavagem(Lavagem lavagem){
 		Lavagem lavagemCabecalho = lavagens.capturarDadosLavagemCabecalho(lavagem.getId());
-		ObservableList<Lavagem> lavagemItens = lavagens.capturarLavagensItens(lavagem.getId());
+		ObservableList<Produto> lavagemItens = lavagens.capturarLavagensItens(lavagem.getId());
 		Cliente cliente = clientes.capturarClientesId(lavagem.getCliente().getCodigo());
     	
     	txtCliente.setText(cliente.getCodigo().toString());
@@ -366,8 +495,8 @@ public class FrmLancamentosLavagensController implements Initializable{
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		
-		tblColumnProdutoItem.setCellValueFactory(new PropertyValueFactory<Lavagem, Integer>("produto"));
-		tblColumnNomeProduto.setCellValueFactory(new PropertyValueFactory<Lavagem, String>("nome"));
-		tblColumnValorItem.setCellValueFactory(new PropertyValueFactory<Lavagem, Float>("valor"));
+		tblColumnProdutoItem.setCellValueFactory(new PropertyValueFactory<Produto, Integer>("produto"));
+		tblColumnNomeProduto.setCellValueFactory(new PropertyValueFactory<Produto, String>("nome"));
+		tblColumnValorItem.setCellValueFactory(new PropertyValueFactory<Produto, Float>("valor"));
 	}
 }

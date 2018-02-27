@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="513.0" prefWidth="701.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.FrmBuscaGenericaControllerProduto">
+   <children>
+      <BorderPane fx:id="telaPesquisa" layoutX="180.0" layoutY="129.0" prefHeight="513.0" prefWidth="701.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <top>
+            <HBox alignment="CENTER" layoutX="142.0" prefHeight="31.0" prefWidth="701.0">
+               <children>
+                  <TextField fx:id="textPesquisa" onKeyPressed="#pesquisarDadosEnter" prefHeight="32.0" prefWidth="541.0">
+                     <HBox.margin>
+                        <Insets bottom="15.0" left="5.0" right="5.0" top="15.0" />
+                     </HBox.margin></TextField>
+                  <ChoiceBox fx:id="cBoxPesquisa" prefHeight="31.0" prefWidth="162.0">
+                     <HBox.margin>
+                        <Insets bottom="15.0" left="5.0" right="5.0" top="15.0" />
+                     </HBox.margin></ChoiceBox>
+               </children>
+            </HBox>
+         </top>
+         <bottom>
+            <HBox alignment="CENTER" prefHeight="74.0" prefWidth="701.0" BorderPane.alignment="CENTER">
+               <children>
+                  <Button fx:id="btnPesquisarBusca" mnemonicParsing="false" onAction="#pesquisarBusca" prefHeight="39.0" prefWidth="85.0" text="Ok" />
+                  <Button fx:id="btnCancelarBusca" mnemonicParsing="false" onAction="#cancelarBusca" prefHeight="39.0" prefWidth="85.0" text="Cancelar">
+                     <HBox.margin>
+                        <Insets left="35.0" />
+                     </HBox.margin>
+                  </Button>
+               </children>
+            </HBox>
+         </bottom>
+         <center>
+            <TableView fx:id="tblProdutos" onKeyPressed="#selecionarProdutoEnter" onMouseClicked="#selecionarProdutoClick" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+              <columns>
+                <TableColumn fx:id="colunaCodigo" prefWidth="75.0" text="ID" />
+                <TableColumn fx:id="colunaNome" prefWidth="342.0" text="Nome" />
+                  <TableColumn fx:id="colunaPrecoVenda" minWidth="0.0" prefWidth="145.0" text="Preço" />
+                  <TableColumn fx:id="colunaData" minWidth="8.0" prefWidth="128.0" text="Data" />
+              </columns>
+               <BorderPane.margin>
+                  <Insets left="5.0" right="5.0" />
+               </BorderPane.margin>
+               <columnResizePolicy>
+                  <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+               </columnResizePolicy>
+            </TableView>
+         </center>
+      </BorderPane>
+   </children>
+</AnchorPane>

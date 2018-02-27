@@ -1,8 +1,11 @@
 package model;
 
+import java.sql.Date;
+
 public class Placa {
 	private Integer id;
 	private String numero;
+	private Date dataCadastro;
 	
 	public Placa() {	
 	}
@@ -21,5 +24,13 @@ public class Placa {
 
 	public void setId(Integer id) {
 		this.id = id;
+	}
+
+	public Date getDataCadastro() {
+		return dataCadastro;
+	}
+
+	public void setDataCadastro(Date dataCadastro) {
+		this.dataCadastro = dataCadastro;
 	}
 }
